@@ -63,7 +63,7 @@ export function LanguageSwitcher() {
             key={lang.code}
             onClick={() => handleSelect(lang.code)}
             className={cn(
-              "font-mono text-sm cursor-pointer rounded-sm px-3 py-2",
+              "cursor-target font-mono text-sm cursor-pointer rounded-sm px-3 py-2",
               "flex items-center gap-2",
               "focus:bg-cyan-400/10 focus:text-cyan-400",
               "hover:bg-cyan-400/10 hover:text-cyan-400",
