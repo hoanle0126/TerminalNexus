@@ -1,0 +1,73 @@
+{
+  "meta": {
+    "title": "Lê Hoàn | Full-Stack Developer",
+    "description": "Portfolio cá nhân của Lê Hoàn — Full-Stack Developer chuyên về React, Next.js, và Cloud Architecture."
+  },
+  "nav": {
+    "home": "Trang chủ",
+    "about": "Giới thiệu",
+    "skills": "Kỹ năng",
+    "projects": "Dự án",
+    "experience": "Kinh nghiệm",
+    "contact": "Liên hệ",
+    "hireMe": "LIÊN HỆ NGAY"
+  },
+  "hero": {
+    "greeting": "Xin chào, tôi là",
+    "name": "Lê Hoàn",
+    "role": "Full-Stack Developer",
+    "tagline": "> Full-Stack Developer — Cloud Architect — UI Engineer",
+    "description": "Xây dựng trải nghiệm web hiện đại với đam mê và sáng tạo. Chuyên về React, Next.js, và Cloud Architecture.",
+    "viewProjects": "XEM DỰ ÁN",
+    "availableBadge": "Sẵn sàng nhận việc",
+    "cta": "Xem dự án",
+    "contact": "Liên hệ"
+  },
+  "terminal": {
+    "title": "SYSTEM TERMINAL",
+    "line1": "$ npm run build",
+    "line2": "info  - Creating optimized production build...",
+    "line3": "info  - Compiled successfully",
+    "line4": "info  - Collecting page data...",
+    "line5": "info  - Generating static pages",
+    "line6": "[✓] Build completed in 12.3s",
+    "line7": "[+] Ready for deployment"
+  },
+  "about": {
+    "title": "Giới thiệu",
+    "subtitle": "Về tôi"
+  },
+  "experience": {
+    "title": "Kinh nghiệm",
+    "subtitle": "Hành trình chuyên nghiệp trong phát triển phần mềm"
+  },
+  "skills": {
+    "title": "Kỹ năng & Công nghệ",
+    "subtitle": "Bản đồ tư duy về chuyên môn kỹ thuật",
+    "frontend": "Frontend",
+    "backend": "Backend",
+    "opsTools": "Vận hành & Công cụ"
+  },
+  "projects": {
+    "title": "Kho Dự Án",
+    "subtitle": "Khám phá các dự án mã nguồn mở",
+    "viewProject": "Xem dự án",
+    "viewCode": "Xem mã nguồn",
+    "stars": "Sao",
+    "forks": "Fork"
+  },
+  "contact": {
+    "title": "Liên hệ",
+    "subtitle": "Hãy cùng làm việc cho dự án tiếp theo của bạn",
+    "name": "Họ tên",
+    "email": "Email",
+    "emailPlaceholder": "email@cuaban.com",
+    "message": "Tin nhắn",
+    "messagePlaceholder": "Hãy kể về dự án của bạn...",
+    "send": "GỬI TIN NHẮN"
+  },
+  "footer": {
+    "tagline": "TẠO NÊN TỪ ĐAM MÊ & MỤC ĐÍCH",
+    "copyright": "© 2025 Lê Hoàn. Mọi quyền được bảo lưu."
+  }
+}

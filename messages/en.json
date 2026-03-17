@@ -1,0 +1,73 @@
+{
+  "meta": {
+    "title": "Lê Hoàn | Full-Stack Developer",
+    "description": "Personal portfolio of Lê Hoàn — Full-Stack Developer specializing in React, Next.js, and Cloud Architecture."
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "skills": "Skills",
+    "projects": "Projects",
+    "experience": "Experience",
+    "contact": "Contact",
+    "hireMe": "HIRE ME"
+  },
+  "hero": {
+    "greeting": "Hello, I'm",
+    "name": "Lê Hoàn",
+    "role": "Full-Stack Developer",
+    "tagline": "> Full-Stack Developer — Cloud Architect — UI Engineer",
+    "description": "Building modern web experiences with passion and creativity. Specializing in React, Next.js, and Cloud Architecture.",
+    "viewProjects": "VIEW PROJECTS",
+    "availableBadge": "Available for Work",
+    "cta": "View Projects",
+    "contact": "Contact Me"
+  },
+  "terminal": {
+    "title": "SYSTEM TERMINAL",
+    "line1": "$ npm run build",
+    "line2": "info  - Creating optimized production build...",
+    "line3": "info  - Compiled successfully",
+    "line4": "info  - Collecting page data...",
+    "line5": "info  - Generating static pages",
+    "line6": "[✓] Build completed in 12.3s",
+    "line7": "[+] Ready for deployment"
+  },
+  "about": {
+    "title": "About",
+    "subtitle": "About Me"
+  },
+  "experience": {
+    "title": "Experience",
+    "subtitle": "Professional journey in software development"
+  },
+  "skills": {
+    "title": "Skills & Technologies",
+    "subtitle": "Interactive mind map of technical expertise",
+    "frontend": "Frontend",
+    "backend": "Backend",
+    "opsTools": "Ops & Tools"
+  },
+  "projects": {
+    "title": "Project Vault",
+    "subtitle": "Explore my open-source projects",
+    "viewProject": "View Project",
+    "viewCode": "View Code",
+    "stars": "Stars",
+    "forks": "Forks"
+  },
+  "contact": {
+    "title": "Get in Touch",
+    "subtitle": "Let's work together on your next project",
+    "name": "Full Name",
+    "email": "Email",
+    "emailPlaceholder": "your@email.com",
+    "message": "Message",
+    "messagePlaceholder": "Tell me about your project...",
+    "send": "SEND MESSAGE"
+  },
+  "footer": {
+    "tagline": "CRAFTED WITH PASSION & PURPOSE",
+    "copyright": "© 2025 Lê Hoàn. All rights reserved."
+  }
+}
