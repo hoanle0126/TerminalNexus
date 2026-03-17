@@ -3,12 +3,12 @@
 import { useState, useEffect, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname, useRouter } from "@/i18n/routing";
-import { useParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Terminal } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ShimmerButton } from "@/components/ui/shimmer-button";
 import { BorderBeam } from "@/components/ui/border-beam";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface NavItemDef {
@@ -133,11 +133,7 @@ function NavItem({ label, href, isActive, onClick, mobile, index = 0 }: NavItemP
 export function Navbar() {
   const t = useTranslations("nav");
   const pathname = usePathname();
-  const params = useParams();
   const router = useRouter();
-
-  const locale = (params.locale as string) ?? "en";
-  const otherLocale = locale === "en" ? "vi" : "en";
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -185,10 +181,6 @@ export function Navbar() {
     },
     [pathname, activeHash]
   );
-
-  const handleLocaleSwitch = useCallback(() => {
-    router.replace(pathname, { locale: otherLocale });
-  }, [router, pathname, otherLocale]);
 
   const scrollToContact = useCallback(() => {
     document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
@@ -244,31 +236,8 @@ export function Navbar() {
 
         {/* Right area: locale + CTA */}
         <div className="hidden md:flex items-center gap-4">
-          {/* Language toggle — styled as bracket item */}
-          <motion.button
-            onClick={handleLocaleSwitch}
-            aria-label={`Switch to ${otherLocale === "vi" ? "Vietnamese" : "English"}`}
-            className={cn(
-              "relative overflow-hidden px-4 py-2 rounded-sm cursor-pointer cursor-target",
-              "border font-mono text-sm tracking-wider",
-              "border-cyan-400/15 text-zinc-500 hover:border-cyan-400/40 hover:text-cyan-400",
-              "transition-colors duration-200",
-              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/70"
-            )}
-          >
-            <motion.span
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/10 to-transparent pointer-events-none"
-              initial={{ x: "-100%" }}
-              whileHover={{ x: "100%" }}
-              transition={{ duration: 0.38, ease: "linear" }}
-              aria-hidden="true"
-            />
-            <span className="relative z-10">
-              <span className="text-cyan-400/30">[</span>
-              {otherLocale.toUpperCase()}
-              <span className="text-cyan-400/30">]</span>
-            </span>
-          </motion.button>
+          {/* Language switcher */}
+          <LanguageSwitcher />
 
           {/* Hire Me CTA */}
           <ShimmerButton
@@ -359,17 +328,9 @@ export function Navbar() {
                 }}
                 className="mt-2 pt-3 border-t border-white/[0.05] flex items-center justify-between gap-3"
               >
-                <button
-                  onClick={() => {
-                    handleLocaleSwitch();
-                    setIsMobileOpen(false);
-                  }}
-                  className="relative overflow-hidden px-4 py-2 rounded-sm border border-cyan-400/15 font-mono text-sm uppercase tracking-wider text-zinc-500 hover:text-cyan-400 hover:border-cyan-400/40 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/70"
-                >
-                  <span className="text-cyan-400/30">[</span>
-                  {otherLocale.toUpperCase()}
-                  <span className="text-cyan-400/30">]</span>
-                </button>
+                <div onClick={() => setIsMobileOpen(false)}>
+                  <LanguageSwitcher />
+                </div>
 
                 <ShimmerButton
                   shimmerColor="#22d3ee"
