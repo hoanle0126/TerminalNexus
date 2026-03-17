@@ -16,6 +16,7 @@ interface TargetCursorProps {
 const CORNER_SIZE = 12;
 const BORDER_W = 3;
 const IDLE_OFFSET = CORNER_SIZE * 1.5; // distance from centre when idle
+const EXPAND_OFFSET = 36;              // bloom radius when cursor-expand is active
 
 // Each corner: which tailwind border sides to show
 const CORNERS = [
@@ -31,6 +32,14 @@ const IDLE_POSITIONS = [
   { x: IDLE_OFFSET - CORNER_SIZE, y: -IDLE_OFFSET }, // top-right
   { x: IDLE_OFFSET - CORNER_SIZE, y: IDLE_OFFSET - CORNER_SIZE }, // bottom-right
   { x: -IDLE_OFFSET, y: IDLE_OFFSET - CORNER_SIZE }, // bottom-left
+];
+
+// Expand (bloom) positions — corners spread outward from cursor centre
+const EXPAND_POSITIONS = [
+  { x: -EXPAND_OFFSET, y: -EXPAND_OFFSET },
+  { x: EXPAND_OFFSET - CORNER_SIZE, y: -EXPAND_OFFSET },
+  { x: EXPAND_OFFSET - CORNER_SIZE, y: EXPAND_OFFSET - CORNER_SIZE },
+  { x: -EXPAND_OFFSET, y: EXPAND_OFFSET - CORNER_SIZE },
 ];
 
 // ─── Corner component ─────────────────────────────────────────────────────────
@@ -81,6 +90,9 @@ export function TargetCursor({
   // ── Snap state ───────────────────────────────────────────────────────────
   const [snapRect, setSnapRect] = useState<DOMRect | null>(null);
   const [isSnapped, setIsSnapped] = useState(false);
+
+  // ── Expand (bloom) state ─────────────────────────────────────────────────
+  const [isExpanded, setIsExpanded] = useState(false);
 
   // ── Spin rotation ────────────────────────────────────────────────────────
   const rotation = useMotionValue(0);
@@ -168,7 +180,18 @@ export function TargetCursor({
     if (isMobile) return;
 
     const handleEnter = (e: MouseEvent) => {
-      const el = (e.target as Element)?.closest(targetSelector);
+      const target = e.target as Element;
+
+      // ── cursor-expand: bloom mode ────────────────────────────────────────
+      if (target?.closest(".cursor-expand")) {
+        setIsExpanded(true);
+        setCornerPositions(EXPAND_POSITIONS);
+        stopSpin();
+        return;
+      }
+
+      // ── cursor-target: snap mode ─────────────────────────────────────────
+      const el = target?.closest(targetSelector);
       if (!el) return;
       activeTargetRef.current = el;
 
@@ -182,7 +205,21 @@ export function TargetCursor({
     };
 
     const handleLeave = (e: MouseEvent) => {
-      const el = (e.target as Element)?.closest(targetSelector);
+      const target = e.target as Element;
+
+      // ── cursor-expand: leave bloom ───────────────────────────────────────
+      const expandEl = target?.closest(".cursor-expand");
+      if (expandEl) {
+        // Only exit if we're not moving into another child of the same expand zone
+        if (expandEl.contains(e.relatedTarget as Node)) return;
+        setIsExpanded(false);
+        setCornerPositions(IDLE_POSITIONS);
+        startSpin();
+        return;
+      }
+
+      // ── cursor-target: leave snap ────────────────────────────────────────
+      const el = target?.closest(targetSelector);
       if (!el) return;
       // Only leave if we're actually leaving this element, not entering a child
       if (el.contains(e.relatedTarget as Node)) return;
@@ -241,7 +278,7 @@ export function TargetCursor({
         {/* Spinning ring wrapper (idle only) */}
         <motion.div
           className="absolute top-0 left-0 w-0 h-0"
-          style={{ rotate: isSnapped ? 0 : rotation }}
+          style={{ rotate: isSnapped || isExpanded ? 0 : rotation }}
         >
           {CORNERS.map((corner, i) => (
             <Corner

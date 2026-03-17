@@ -107,7 +107,7 @@ export default function CodeEditorPanel() {
         transformStyle: "preserve-3d",
         transformPerspective: 800,
       }}
-      className="relative w-full max-w-[420px] rounded-xl overflow-hidden
+      className="cursor-expand relative w-full max-w-[420px] rounded-xl overflow-hidden
                  border border-cyan-400/20
                  shadow-[0_0_32px_rgba(0,255,255,0.10),0_0_80px_rgba(0,255,255,0.05)]
                  cursor-default select-none"
