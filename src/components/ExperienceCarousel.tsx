@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 import {
-  useScroll,
   useTransform,
   useSpring,
+  useMotionValue,
   motion,
 } from "motion/react";
 
@@ -137,48 +137,22 @@ const ACCENT_STYLES: Record<
 interface ScrollCardProps {
   item: ExperienceItem;
   cardIndex: number;
-  smoothProgress: ReturnType<typeof useSpring>;
+  /** spring-smoothed fractional active index (0 = first card, N-1 = last) */
+  springIndex: ReturnType<typeof useSpring>;
   totalCards: number;
 }
 
-function ScrollCard({ item, cardIndex, smoothProgress, totalCards }: ScrollCardProps) {
+function ScrollCard({ item, cardIndex, springIndex }: ScrollCardProps) {
   const accent = ACCENT_STYLES[item.accentColor];
 
-  // rel = signed distance from active card: -1 = one to left, +1 = one to right
-  const x = useTransform(smoothProgress, (v) => {
-    const rel = cardIndex - v * (totalCards - 1);
-    return rel * SPREAD_X;
-  });
-
-  const y = useTransform(smoothProgress, (v) => {
-    const rel = cardIndex - v * (totalCards - 1);
-    return rel * SPREAD_Y;
-  });
-
-  const rotateZ = useTransform(smoothProgress, (v) => {
-    const rel = cardIndex - v * (totalCards - 1);
-    return rel * TILT_Z;
-  });
-
-  const rotateY = useTransform(smoothProgress, (v) => {
-    const rel = cardIndex - v * (totalCards - 1);
-    return rel * DEPTH_Y;
-  });
-
-  const scale = useTransform(smoothProgress, (v) => {
-    const rel = Math.abs(cardIndex - v * (totalCards - 1));
-    return Math.max(0.78, 1 - rel * 0.11);
-  });
-
-  const opacity = useTransform(smoothProgress, (v) => {
-    const rel = Math.abs(cardIndex - v * (totalCards - 1));
-    return Math.max(0.15, 1 - rel * 0.5);
-  });
-
-  const zIndex = useTransform(smoothProgress, (v) => {
-    const rel = Math.abs(cardIndex - v * (totalCards - 1));
-    return Math.round(100 - rel * 30);
-  });
+  // rel = signed distance from this card to the spring-animated active index
+  const x       = useTransform(springIndex, (v) => (cardIndex - v) * SPREAD_X);
+  const y       = useTransform(springIndex, (v) => (cardIndex - v) * SPREAD_Y);
+  const rotateZ = useTransform(springIndex, (v) => (cardIndex - v) * TILT_Z);
+  const rotateY = useTransform(springIndex, (v) => (cardIndex - v) * DEPTH_Y);
+  const scale   = useTransform(springIndex, (v) => Math.max(0.78, 1 - Math.abs(cardIndex - v) * 0.11));
+  const opacity = useTransform(springIndex, (v) => Math.max(0.15, 1 - Math.abs(cardIndex - v) * 0.5));
+  const zIndex  = useTransform(springIndex, (v) => Math.round(100 - Math.abs(cardIndex - v) * 30));
 
   return (
     <motion.div
@@ -269,23 +243,17 @@ function ScrollCard({ item, cardIndex, smoothProgress, totalCards }: ScrollCardP
 // ─── Progress Dots ─────────────────────────────────────────────────────────────
 
 function ProgressDots({
-  smoothProgress,
+  springIndex,
   total,
 }: {
-  smoothProgress: ReturnType<typeof useSpring>;
+  springIndex: ReturnType<typeof useSpring>;
   total: number;
 }) {
   return (
     <div className="flex items-center gap-3">
       {Array.from({ length: total }).map((_, i) => {
-        const width = useTransform(smoothProgress, (v) => {
-          const active = Math.round(v * (total - 1));
-          return active === i ? 28 : 6;
-        });
-        const opacity = useTransform(smoothProgress, (v) => {
-          const active = Math.round(v * (total - 1));
-          return active === i ? 1 : 0.3;
-        });
+        const width   = useTransform(springIndex, (v) => (Math.round(v) === i ? 28 : 6));
+        const opacity = useTransform(springIndex, (v) => (Math.round(v) === i ? 1 : 0.3));
         return (
           <motion.div
             key={i}
@@ -300,8 +268,8 @@ function ProgressDots({
 
 // ─── Scroll Hint ───────────────────────────────────────────────────────────────
 
-function ScrollHint({ smoothProgress }: { smoothProgress: ReturnType<typeof useSpring> }) {
-  const opacity = useTransform(smoothProgress, [0, 0.15], [1, 0]);
+function ScrollHint({ springIndex }: { springIndex: ReturnType<typeof useSpring> }) {
+  const opacity = useTransform(springIndex, [0, 0.3], [1, 0]);
   return (
     <motion.div
       style={{ opacity }}
@@ -367,29 +335,90 @@ function MobileTimeline({ items }: { items: ExperienceItem[] }) {
 
 // ─── Main Export ───────────────────────────────────────────────────────────────
 
+// ─── Snap threshold: minimum wheel delta to trigger a card advance ─────────────
+const WHEEL_THRESHOLD = 30; // px
+
 export default function ExperienceCarousel({ title, subtitle }: ExperienceCarouselProps) {
   const N = EXPERIENCE_DATA.length;
-  const outerRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
 
-  const { scrollYProgress } = useScroll({
-    target: outerRef,
-    offset: ["start start", "end end"],
-  });
+  // ── Discrete active index ─────────────────────────────────────────────────
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001,
-  });
+  // ── Spring-smoothed fractional index drives all card transforms ───────────
+  const rawIndex = useMotionValue(0);
+  const springIndex = useSpring(rawIndex, { stiffness: 280, damping: 32, mass: 0.8 });
+
+  // Keep rawIndex in sync with activeIndex
+  useEffect(() => { rawIndex.set(activeIndex); }, [activeIndex, rawIndex]);
+
+  // ── Intersection observer: track whether section is in viewport ───────────
+  const isInView = useRef(false);
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { isInView.current = entry.isIntersecting; },
+      { threshold: 0.5 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  // ── Wheel handler ─────────────────────────────────────────────────────────
+  const cooldownRef = useRef(false);
+
+  const onWheel = useCallback(
+    (e: WheelEvent) => {
+      if (!isInView.current) return;
+      const delta = e.deltaY;
+
+      // Scrolling DOWN
+      if (delta > WHEEL_THRESHOLD) {
+        if (activeIndex < N - 1) {
+          e.preventDefault();
+          if (!cooldownRef.current) {
+            cooldownRef.current = true;
+            setActiveIndex((i) => Math.min(i + 1, N - 1));
+            setTimeout(() => { cooldownRef.current = false; }, 700);
+          }
+        }
+        // At last card → let page scroll naturally (no preventDefault)
+        return;
+      }
+
+      // Scrolling UP
+      if (delta < -WHEEL_THRESHOLD) {
+        if (activeIndex > 0) {
+          e.preventDefault();
+          if (!cooldownRef.current) {
+            cooldownRef.current = true;
+            setActiveIndex((i) => Math.max(i - 1, 0));
+            setTimeout(() => { cooldownRef.current = false; }, 700);
+          }
+        }
+        // At first card → let page scroll up naturally
+        return;
+      }
+    },
+    [activeIndex, N]
+  );
+
+  // Attach wheel listener to the section (non-passive so we can preventDefault)
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onWheel);
+  }, [onWheel]);
 
   return (
     <>
-      {/* ── DESKTOP: Scroll-driven 3D fan ───────────────────────────────────── */}
+      {/* ── DESKTOP: Wheel-snap carousel ─────────────────────────────────────── */}
       <div
-        ref={outerRef}
+        ref={sectionRef}
         id="experience"
-        className="relative hidden md:block"
-        style={{ height: `${N * 100}vh` }}
+        className="relative hidden md:block h-screen"
       >
         <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden bg-[#040d1a]">
 
@@ -441,7 +470,7 @@ export default function ExperienceCarousel({ title, subtitle }: ExperienceCarous
                   key={card.id}
                   item={card}
                   cardIndex={i}
-                  smoothProgress={smoothProgress}
+                  springIndex={springIndex}
                   totalCards={N}
                 />
               ))}
@@ -449,12 +478,12 @@ export default function ExperienceCarousel({ title, subtitle }: ExperienceCarous
 
             {/* Progress dots */}
             <div className="mt-8">
-              <ProgressDots smoothProgress={smoothProgress} total={N} />
+              <ProgressDots springIndex={springIndex} total={N} />
             </div>
           </div>
 
           {/* Scroll hint */}
-          <ScrollHint smoothProgress={smoothProgress} />
+          <ScrollHint springIndex={springIndex} />
         </div>
       </div>
 
