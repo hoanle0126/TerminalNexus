@@ -38,8 +38,11 @@
     "subtitle": "Về tôi"
   },
   "experience": {
-    "title": "Kinh nghiệm",
-    "subtitle": "Hành trình chuyên nghiệp trong phát triển phần mềm"
+    "title": "HÀNH TRÌNH",
+    "subtitle": "freelance -> fullstack -> sang tao",
+    "present": "Hiện tại",
+    "prevBtn": "Trước",
+    "nextBtn": "Tiếp"
   },
   "skills": {
     "title": "Kỹ năng & Công nghệ",

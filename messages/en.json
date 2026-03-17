@@ -38,8 +38,11 @@
     "subtitle": "About Me"
   },
   "experience": {
-    "title": "Experience",
-    "subtitle": "Professional journey in software development"
+    "title": "MY JOURNEY",
+    "subtitle": "freelance -> fullstack -> creative",
+    "present": "Present",
+    "prevBtn": "Previous",
+    "nextBtn": "Next"
   },
   "skills": {
     "title": "Skills & Technologies",
