@@ -206,7 +206,7 @@ export function Navbar() {
         <Link
           href="/"
           aria-label="Home — Lê Hoàn"
-          className="flex items-center gap-2 font-mono text-lg font-bold tracking-widest text-white transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/70 rounded"
+          className="cursor-target flex items-center gap-2 font-mono text-lg font-bold tracking-widest text-white transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/70 rounded"
         >
           <Terminal
             className="h-5 w-5 text-cyan-400 shrink-0"
