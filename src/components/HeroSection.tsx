@@ -7,6 +7,8 @@ import dynamic from "next/dynamic";
 import GlitchText from "@/components/reactbits/GlitchText";
 import CountUp from "@/components/reactbits/CountUp";
 import BlurText from "@/components/reactbits/BlurText";
+import CodeEditorPanel from "@/components/hero/CodeEditorPanel";
+import FloatingBadges from "@/components/hero/FloatingBadges";
 
 // FaultyTerminal uses WebGL — load only on client with no SSR
 const FaultyTerminal = dynamic(
@@ -24,20 +26,10 @@ interface HeroTranslations {
   contact: string;
 }
 
-interface TerminalTranslations {
-  title: string;
-  line1: string;
-  line2: string;
-  line3: string;
-  line4: string;
-  line5: string;
-  line6: string;
-  line7: string;
-}
-
 interface HeroSectionProps {
   hero: HeroTranslations;
-  terminal: TerminalTranslations;
+  // terminal prop kept optional for backward compat but no longer used for rendering
+  terminal?: Record<string, string>;
 }
 
 // ─── Constants ─────────────────────────────────────────────────────────────────
@@ -115,82 +107,10 @@ function TypewriterRole() {
   );
 }
 
-// ─── Terminal Window (right panel overlay) ────────────────────────────────────
-function TerminalWindow({ terminal }: { terminal: TerminalTranslations }) {
-  const [visibleLines, setVisibleLines] = useState(0);
-
-  const lines = [
-    { text: terminal.line1, color: "text-cyan-300" },
-    { text: terminal.line2, color: "text-zinc-400" },
-    { text: terminal.line3, color: "text-green-400" },
-    { text: terminal.line4, color: "text-zinc-400" },
-    { text: terminal.line5, color: "text-zinc-400" },
-    { text: terminal.line6, color: "text-emerald-400" },
-    { text: terminal.line7, color: "text-cyan-400" },
-  ];
-
-  useEffect(() => {
-    if (visibleLines >= lines.length) return;
-    const timer = setTimeout(() => {
-      setVisibleLines((prev) => prev + 1);
-    }, 400 + visibleLines * 120);
-    return () => clearTimeout(timer);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [visibleLines]);
-
-  return (
-    <div className="relative z-10 w-full h-full flex items-center justify-center p-4 md:p-6">
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.8, ease: "easeOut" }}
-        className="w-full max-w-sm md:max-w-md rounded-xl overflow-hidden border border-cyan-500/25 shadow-[0_0_40px_rgba(0,255,255,0.12)]"
-        style={{
-          background:
-            "linear-gradient(135deg, rgba(8,12,20,0.9) 0%, rgba(0,20,30,0.85) 100%)",
-          backdropFilter: "blur(16px)",
-          WebkitBackdropFilter: "blur(16px)",
-        }}
-      >
-        {/* Title bar */}
-        <div className="flex items-center gap-2 px-4 py-3 border-b border-cyan-500/15 bg-black/30">
-          <div className="flex gap-1.5">
-            <span className="w-3 h-3 rounded-full bg-red-500/80" />
-            <span className="w-3 h-3 rounded-full bg-yellow-500/80" />
-            <span className="w-3 h-3 rounded-full bg-green-500/80" />
-          </div>
-          <span className="ml-2 text-xs font-mono text-cyan-400/70 tracking-widest uppercase">
-            {terminal.title}
-          </span>
-          {/* Blinking status dot */}
-          <span className="ml-auto w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-        </div>
-
-        {/* Terminal body */}
-        <div className="p-4 md:p-5 font-mono text-xs md:text-sm space-y-1.5 min-h-[180px]">
-          {lines.slice(0, visibleLines).map((line, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.25, ease: "easeOut" }}
-              className={line.color}
-            >
-              {line.text}
-            </motion.div>
-          ))}
-          {/* Blinking cursor after last line */}
-          {visibleLines < lines.length && (
-            <span className="inline-block w-2 h-4 bg-cyan-400 animate-blink-cursor opacity-80" />
-          )}
-        </div>
-      </motion.div>
-    </div>
-  );
-}
+// TerminalWindow removed — replaced by CodeEditorPanel + FloatingBadges
 
 // ─── Main HeroSection ─────────────────────────────────────────────────────────
-export default function HeroSection({ hero, terminal }: HeroSectionProps) {
+export default function HeroSection({ hero }: HeroSectionProps) {
   return (
     <section
       id="home"
@@ -326,44 +246,35 @@ export default function HeroSection({ hero, terminal }: HeroSectionProps) {
             </FadeUp>
           </div>
 
-          {/* ══════════════════ RIGHT COLUMN (WebGL + Terminal overlay) ══════════════════ */}
-          <div className="cursor-target relative order-1 lg:order-2 h-[340px] md:h-[460px] lg:h-[540px] rounded-2xl overflow-hidden border border-cyan-500/10">
-            {/* FaultyTerminal WebGL canvas — fills the panel */}
-            <FaultyTerminal
-              className="absolute inset-0 w-full h-full"
-              tint="#00e8ff"
-              timeScale={0.18}
-              scanlineIntensity={0.25}
-              glitchAmount={1.2}
-              flickerAmount={0.6}
-              chromaticAberration={1.5}
-              curvature={0.15}
-              brightness={0.85}
-              mouseReact
-              mouseStrength={0.15}
-              pageLoadAnimation
-              dpr={Math.min(
-                typeof window !== "undefined" ? window.devicePixelRatio : 1,
-                2
-              )}
-            />
+          {/* ══════════════════ RIGHT COLUMN (CodeEditor + FloatingBadges) ══════════════════ */}
+          <div className="relative order-1 lg:order-2 flex items-center justify-center
+                          h-[360px] md:h-[480px] lg:h-[560px] px-8 md:px-12">
 
-            {/* Dark overlay so terminal window is readable */}
-            <div
-              aria-hidden
-              className="absolute inset-0 bg-gradient-to-br from-black/60 via-[#000c14]/50 to-black/40"
-            />
-
-            {/* Corner accent lines — purely decorative */}
-            <div aria-hidden className="absolute inset-0 pointer-events-none">
-              <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-cyan-500/60 rounded-tl-2xl" />
-              <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-cyan-500/60 rounded-tr-2xl" />
-              <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-cyan-500/60 rounded-bl-2xl" />
-              <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-cyan-500/60 rounded-br-2xl" />
+            {/* FaultyTerminal — kept as ambient backdrop at low opacity */}
+            <div className="pointer-events-none absolute inset-0 opacity-15 rounded-2xl overflow-hidden">
+              <FaultyTerminal
+                className="absolute inset-0 w-full h-full"
+                tint="#00e8ff"
+                timeScale={0.12}
+                scanlineIntensity={0.15}
+                glitchAmount={0.6}
+                flickerAmount={0.3}
+                chromaticAberration={0.8}
+                curvature={0.08}
+                brightness={0.6}
+                mouseReact={false}
+                dpr={Math.min(
+                  typeof window !== "undefined" ? window.devicePixelRatio : 1,
+                  2
+                )}
+              />
             </div>
 
-            {/* Glassmorphic terminal window */}
-            <TerminalWindow terminal={terminal} />
+            {/* Code Editor Panel + Floating badges wrapper */}
+            <div className="relative w-full flex items-center justify-center">
+              <CodeEditorPanel />
+              <FloatingBadges />
+            </div>
           </div>
         </div>
       </div>
