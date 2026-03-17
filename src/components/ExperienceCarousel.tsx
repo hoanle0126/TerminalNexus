@@ -199,6 +199,7 @@ function ScrollCard({ item, cardIndex, smoothProgress, totalCards }: ScrollCardP
       {/* Card face */}
       <div
         className={`
+          cursor-target
           w-full h-full rounded-2xl p-6 border relative overflow-hidden
           ${accent.border} ${accent.glow}
           bg-[#070c14]
