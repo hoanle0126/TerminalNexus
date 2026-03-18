@@ -7,6 +7,8 @@ import { JetBrains_Mono, Inter } from "next/font/google";
 import { Navbar } from "@/components/Navbar";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { TargetCursorLoader } from "@/components/TargetCursorLoader";
+import { BackgroundNoise } from "@/components/effects/BackgroundNoise";
+import { ScrollToTop } from "@/components/effects/ScrollToTop";
 
 // ─── Fonts ────────────────────────────────────────────────────────────────────
 const jetbrainsMono = JetBrains_Mono({
@@ -105,6 +107,8 @@ export default async function LocaleLayout({
         className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased text-white min-h-screen`}
       >
         <NextIntlClientProvider locale={locale} messages={messages}>
+          {/* Global background noise overlay — CRT scanlines + film grain */}
+          <BackgroundNoise />
           {/* Custom crosshair cursor — SSR false, mobile-safe */}
           <TargetCursorLoader />
           {/* Scroll-progress must be outside Navbar to avoid z-index conflicts */}
@@ -114,6 +118,8 @@ export default async function LocaleLayout({
           <main id="main-content" className="pt-14">
             {children}
           </main>
+          {/* Floating scroll-to-top button with progress ring */}
+          <ScrollToTop />
         </NextIntlClientProvider>
       </body>
     </html>
