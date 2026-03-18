@@ -58,17 +58,38 @@
     "hoverToFlip": "di chuột để xem"
   },
   "contact": {
-    "title": "Liên hệ",
-    "subtitle": "Hãy cùng làm việc cho dự án tiếp theo của bạn",
+    "label": "// 05. LIÊN HỆ",
+    "title": "KẾT NỐI",
+    "subtitle": "Hãy cùng hợp tác",
+    "blurb": "Bạn có dự án muốn thực hiện? Hãy gửi tin nhắn để chúng ta cùng tạo ra điều tuyệt vời.",
+    "email": "hoanle@example.com",
     "name": "Họ tên",
-    "email": "Email",
-    "emailPlaceholder": "email@cuaban.com",
-    "message": "Tin nhắn",
-    "messagePlaceholder": "Hãy kể về dự án của bạn...",
-    "send": "GỬI TIN NHẮN"
+    "namePlaceholder": "Tên của bạn",
+    "emailField": "Email",
+    "emailPlaceholder": "email@cua.ban",
+    "message": "Nội dung",
+    "messagePlaceholder": "Kể cho tôi nghe về dự án của bạn...",
+    "send": "GỬI TIN NHẮN",
+    "sent": "> message_sent.sh ✓",
+    "socialGithub": "Trang GitHub",
+    "socialLinkedin": "Trang LinkedIn",
+    "socialDribbble": "Trang Dribbble",
+    "socialBehance": "Trang Behance",
+    "socialEmail": "Gửi email"
   },
   "footer": {
-    "tagline": "TẠO NÊN TỪ ĐAM MÊ & MỤC ĐÍCH",
-    "copyright": "© 2025 Lê Hoàn. Mọi quyền được bảo lưu."
+    "tagline": "Full-Stack Developer",
+    "description": "Xây dựng trải nghiệm web hiện đại — từ giao diện pixel-perfect đến hệ thống cloud có khả năng mở rộng.",
+    "quickLinks": "Điều Hướng",
+    "connect": "Kết Nối",
+    "quote": "Có thể chúng ta sẽ không gặp lại nhau. Hãy theo dõi để không bỏ lỡ",
+    "copyright": "© 2025 Lê Hoàn. Bảo lưu mọi quyền.",
+    "nav": {
+      "home": "01. Trang chủ",
+      "about": "02. Giới thiệu",
+      "skills": "03. Kỹ năng",
+      "projects": "04. Dự án",
+      "contact": "05. Liên hệ"
+    }
   }
 }

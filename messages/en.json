@@ -58,17 +58,38 @@
     "hoverToFlip": "hover to reveal"
   },
   "contact": {
-    "title": "Get in Touch",
-    "subtitle": "Let's work together on your next project",
-    "name": "Full Name",
-    "email": "Email",
+    "label": "// 05. CONTACT",
+    "title": "GET IN TOUCH",
+    "subtitle": "Let's work together",
+    "blurb": "Have a project in mind? I'd love to hear about it. Send me a message and let's make something great.",
+    "email": "hoanle@example.com",
+    "name": "Name",
+    "namePlaceholder": "Your name",
+    "emailField": "Email",
     "emailPlaceholder": "your@email.com",
     "message": "Message",
     "messagePlaceholder": "Tell me about your project...",
-    "send": "SEND MESSAGE"
+    "send": "SEND MESSAGE",
+    "sent": "> message_sent.sh ✓",
+    "socialGithub": "GitHub profile",
+    "socialLinkedin": "LinkedIn profile",
+    "socialDribbble": "Dribbble profile",
+    "socialBehance": "Behance profile",
+    "socialEmail": "Send email"
   },
   "footer": {
-    "tagline": "CRAFTED WITH PASSION & PURPOSE",
-    "copyright": "© 2025 Lê Hoàn. All rights reserved."
+    "tagline": "Full-Stack Developer",
+    "description": "Building modern web experiences — from pixel-perfect interfaces to scalable cloud systems.",
+    "quickLinks": "Quick Links",
+    "connect": "Connect",
+    "quote": "Maybe we won't see each other again. Subscribe so you don't lose me",
+    "copyright": "© 2025 Lê Hoàn. All rights reserved.",
+    "nav": {
+      "home": "01. Home",
+      "about": "02. About",
+      "skills": "03. Skills",
+      "projects": "04. Projects",
+      "contact": "05. Contact"
+    }
   }
 }

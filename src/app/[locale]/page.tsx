@@ -3,6 +3,8 @@ import HeroSection from "@/components/HeroSection";
 import ExperienceSection from "@/components/ExperienceSection";
 import SkillsSection from "@/components/SkillsSection";
 import { ProjectsSection } from "@/components/projects/ProjectsSection";
+import { ContactSection } from "@/components/contact/ContactSection";
+import { Footer } from "@/components/footer/Footer";
 
 export default async function Home({
   params,
@@ -45,6 +47,8 @@ export default async function Home({
       />
       <SkillsSection />
       <ProjectsSection />
+      <ContactSection />
+      <Footer />
     </>
   );
 }
