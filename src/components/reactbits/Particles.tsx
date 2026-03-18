@@ -122,7 +122,13 @@ const Particles: React.FC<ParticlesProps> = ({
     const container = containerRef.current;
     if (!container) return;
 
-    const renderer = new Renderer({ dpr: pixelRatio, depth: false, alpha: true });
+    let renderer: Renderer;
+    try {
+      renderer = new Renderer({ dpr: pixelRatio, depth: false, alpha: true });
+    } catch {
+      // WebGL not available (headless browser, GPU disabled, etc.)
+      return;
+    }
     const gl = renderer.gl;
     container.appendChild(gl.canvas);
     gl.clearColor(0, 0, 0, 0);

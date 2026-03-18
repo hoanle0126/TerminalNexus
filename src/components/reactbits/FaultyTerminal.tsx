@@ -291,7 +291,13 @@ export default function FaultyTerminal({
     const ctn = containerRef.current;
     if (!ctn) return;
 
-    const renderer = new Renderer({ dpr });
+    let renderer: Renderer;
+    try {
+      renderer = new Renderer({ dpr });
+    } catch {
+      // WebGL not available (headless browser, GPU disabled, etc.)
+      return;
+    }
     rendererRef.current = renderer;
     const gl = renderer.gl;
     gl.clearColor(0, 0, 0, 1);

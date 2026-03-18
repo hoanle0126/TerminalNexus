@@ -216,10 +216,17 @@ export default function Galaxy({
   useEffect(() => {
     if (!ctnDom.current) return;
     const ctn = ctnDom.current;
-    const renderer = new Renderer({
-      alpha: transparent,
-      premultipliedAlpha: false
-    });
+
+    let renderer: Renderer;
+    try {
+      renderer = new Renderer({
+        alpha: transparent,
+        premultipliedAlpha: false
+      });
+    } catch {
+      // WebGL not available (headless browser, GPU disabled, etc.)
+      return;
+    }
     const gl = renderer.gl;
 
     if (transparent) {
