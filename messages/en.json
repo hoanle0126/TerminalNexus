@@ -99,5 +99,12 @@
       "projects": "04. Projects",
       "contact": "05. Contact"
     }
+  },
+  "boot": {
+    "line1": "SYSTEM BOOT v2.0.26...",
+    "line2": "Loading modules............. OK",
+    "line3": "Initializing interface...... OK",
+    "line4": "LÊ HOÀN // DEVELOPER",
+    "line5": "STATUS: ONLINE"
   }
 }

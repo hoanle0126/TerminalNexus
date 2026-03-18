@@ -10,6 +10,7 @@ import { TargetCursorLoader } from "@/components/effects/TargetCursorLoader";
 import { BackgroundNoise } from "@/components/effects/BackgroundNoise";
 import { ScrollToTop } from "@/components/effects/ScrollToTop";
 import ThemeProvider from "@/components/effects/ThemeProvider";
+import BootLoader from "@/components/effects/BootLoader";
 import { siteConfig } from "@/config/site";
 
 // ─── Fonts ────────────────────────────────────────────────────────────────────
@@ -109,6 +110,8 @@ export default async function LocaleLayout({
         className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased text-white min-h-screen`}
       >
         <NextIntlClientProvider locale={locale} messages={messages}>
+          {/* Boot loading screen — session-aware, shows once */}
+          <BootLoader />
           {/* Theme accent color injector */}
           <ThemeProvider />
           {/* Global background noise overlay — CRT scanlines + film grain */}

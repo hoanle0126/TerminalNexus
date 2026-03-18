@@ -99,5 +99,12 @@
       "projects": "04. Dự án",
       "contact": "05. Liên hệ"
     }
+  },
+  "boot": {
+    "line1": "KHỞI ĐỘNG HỆ THỐNG v2.0.26...",
+    "line2": "Tải module.................. OK",
+    "line3": "Khởi tạo giao diện......... OK",
+    "line4": "LÊ HOÀN // LẬP TRÌNH VIÊN",
+    "line5": "TRẠNG THÁI: ONLINE"
   }
 }
