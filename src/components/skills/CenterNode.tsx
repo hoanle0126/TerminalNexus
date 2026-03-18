@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react";
 import { CENTER } from "./networkGraphTypes";
+import { siteConfig } from "@/config/site";
 
 export function CenterNode() {
   return (
@@ -19,19 +20,21 @@ export function CenterNode() {
       >
         {/* Outer ring */}
         <motion.div
-          animate={{ boxShadow: [
-            "0 0 20px 4px rgba(168,85,247,0.5), 0 0 40px 8px rgba(0,255,255,0.15)",
-            "0 0 30px 8px rgba(168,85,247,0.7), 0 0 60px 12px rgba(0,255,255,0.25)",
-            "0 0 20px 4px rgba(168,85,247,0.5), 0 0 40px 8px rgba(0,255,255,0.15)",
+           animate={{ boxShadow: [
+            "0 0 20px 4px rgba(168,85,247,0.5), 0 0 40px 8px rgba(var(--accent-primary-rgb),0.15)",
+            "0 0 30px 8px rgba(168,85,247,0.7), 0 0 60px 12px rgba(var(--accent-primary-rgb),0.25)",
+            "0 0 20px 4px rgba(168,85,247,0.5), 0 0 40px 8px rgba(var(--accent-primary-rgb),0.15)",
           ]}}
           transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
           className="w-[100px] h-[100px] rounded-full border-2 border-purple-500 flex items-center justify-center"
           style={{ background: "rgba(5, 10, 25, 0.95)" }}
         >
           {/* Inner ring */}
-          <div className="w-[82px] h-[82px] rounded-full border border-cyan-400/70 flex items-center justify-center">
+          <div className="w-[82px] h-[82px] rounded-full border border-accent-primary/70 flex items-center justify-center">
             <span className="font-mono text-[11px] font-bold text-white tracking-widest text-center leading-tight">
-              LÊ<br />HOÀN
+              {siteConfig.shortName.split("\n").map((line, i) => (
+                <span key={i}>{i > 0 && <br />}{line}</span>
+              ))}
             </span>
           </div>
         </motion.div>

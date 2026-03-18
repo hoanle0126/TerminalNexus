@@ -372,3 +372,35 @@ refactor(effects): extract BackgroundNoise into separate component
 - Nếu task phức tạp → **chia nhỏ thành sub-tasks**, commit sau mỗi sub-task.
 - **KHÔNG** cố refactor + implement + test tất cả trong 1 session.
 - Khi context dài → **chủ động thông báo** user để bắt đầu session mới.
+
+---
+
+## 📦 Config-Driven Architecture
+
+### Rule 24 — Personal Data = Config Only
+
+- **TUYỆT ĐỐI KHÔNG** hardcode thông tin cá nhân (tên, URL, social links, stats) trong component files.
+- Toàn bộ personal data → import từ `src/config/`.
+- Components chỉ **nhận data từ config và render** — không chứa data cá nhân.
+
+```
+src/config/
+├── site.ts          ← name, domain, social links, SEO meta
+├── hero.ts          ← stats, code editor content, terminal output
+├── navigation.ts    ← nav items + section IDs
+├── experience.ts    ← career timeline
+├── skills.ts        ← skill clusters + items
+└── projects.ts      ← project entries
+```
+
+```tsx
+// ✅ Import từ config
+import { siteConfig } from "@/config/site";
+<span>{siteConfig.displayName}</span>
+
+// ❌ Hardcode trong component
+<span>LE HOAN</span>
+```
+
+- Khi thêm feature mới cần personal data → **PHẢI thêm vào config trước**, rồi mới import trong component.
+- Social links → dùng `resolveSocialIcon()` từ `@/components/shared/socialIcons.tsx` để map icon name → Lucide component.

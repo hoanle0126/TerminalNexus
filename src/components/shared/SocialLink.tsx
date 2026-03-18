@@ -25,7 +25,7 @@ export function SocialLink({ href, label, icon, iconUrl }: SocialLinkProps) {
         border border-white/20
         bg-white/5
         text-gray-400
-        hover:border-cyan-400 hover:text-cyan-400 hover:bg-cyan-400/10
+        hover:border-accent-primary hover:text-accent-primary hover:bg-accent-primary/10
         transition-colors duration-200
       "
     >

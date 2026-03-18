@@ -11,6 +11,7 @@ import { ShimmerButton } from "@/components/ui/shimmer-button";
 import { LanguageSwitcher } from "@/components/shared/LanguageSwitcher";
 import { NavItem } from "@/components/shared/NavItem";
 import { NAV_ITEMS, useActiveSection } from "@/components/shared/useActiveSection";
+import { siteConfig } from "@/config/site";
 
 // ─── Component ────────────────────────────────────────────────────────────────
 export function Navbar() {
@@ -59,17 +60,17 @@ export function Navbar() {
         {/* Logo */}
         <Link
           href="/"
-          aria-label="Home — Lê Hoàn"
-          className="cursor-target flex items-center gap-2 font-mono text-lg font-bold tracking-widest text-white transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/70 rounded"
+          aria-label={`Home — ${siteConfig.name}`}
+          className="cursor-target flex items-center gap-2 font-mono text-lg font-bold tracking-widest text-white transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary/70 rounded"
         >
           <Terminal
-            className="h-5 w-5 text-cyan-400 shrink-0"
+            className="h-5 w-5 text-accent-primary shrink-0"
             aria-hidden="true"
           />
-          <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-green-400 bg-clip-text text-transparent">
-            LE HOAN
+          <span className="bg-gradient-to-r from-accent-primary via-purple-400 to-green-400 bg-clip-text text-transparent">
+            {siteConfig.displayName}
           </span>
-          <span className="text-cyan-400/60 animate-pulse">_</span>
+          <span className="text-accent-primary/60 animate-pulse">_</span>
         </Link>
 
         {/* Desktop nav items */}
@@ -95,11 +96,11 @@ export function Navbar() {
 
           {/* Hire Me CTA */}
           <ShimmerButton
-            shimmerColor="var(--accent-cyan)"
+            shimmerColor="var(--accent-primary)"
             shimmerDuration="2.5s"
-            background="rgba(6, 182, 212, 0.07)"
+            background="rgba(var(--accent-primary-rgb), 0.07)"
             borderRadius="4px"
-            className="font-mono text-sm tracking-[0.2em] uppercase text-cyan-300 border-cyan-500/30 px-5 py-2.5 hover:border-cyan-400/60 transition-colors cursor-target"
+            className="font-mono text-sm tracking-[0.2em] uppercase text-accent-primary border-accent-primary/30 px-5 py-2.5 hover:border-accent-primary/60 transition-colors cursor-target"
             onClick={scrollToContact}
             aria-label="Hire me — navigate to contact section"
           >
@@ -113,7 +114,7 @@ export function Navbar() {
           aria-label={isMobileOpen ? "Close menu" : "Open menu"}
           aria-expanded={isMobileOpen}
           aria-controls="mobile-nav"
-          className="md:hidden flex items-center justify-center w-9 h-9 rounded text-zinc-400 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/70"
+          className="md:hidden flex items-center justify-center w-9 h-9 rounded text-zinc-400 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary/70"
         >
           <AnimatePresence mode="wait" initial={false}>
             {isMobileOpen ? (
@@ -178,11 +179,11 @@ export function Navbar() {
                 </div>
 
                 <ShimmerButton
-                  shimmerColor="var(--accent-cyan)"
+                  shimmerColor="var(--accent-primary)"
                   shimmerDuration="2.5s"
-                  background="rgba(6, 182, 212, 0.07)"
+                  background="rgba(var(--accent-primary-rgb), 0.07)"
                   borderRadius="4px"
-                  className="font-mono text-sm tracking-[0.2em] uppercase text-cyan-300 border-cyan-500/30 px-5 py-2.5"
+                  className="font-mono text-sm tracking-[0.2em] uppercase text-accent-primary border-accent-primary/30 px-5 py-2.5"
                   onClick={() => {
                     setIsMobileOpen(false);
                     setTimeout(() => {

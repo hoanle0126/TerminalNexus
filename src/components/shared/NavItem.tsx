@@ -51,16 +51,16 @@ export function NavItem({ label, href, isActive, onClick, mobile, index = 0 }: N
         "border font-mono text-sm tracking-wider",
         mobile && "w-full px-4 py-2.5 text-sm",
         isActive
-          ? "border-cyan-400/60 text-cyan-300"
-          : "border-cyan-400/15 text-zinc-400 hover:border-cyan-400/50 hover:text-cyan-300 transition-colors duration-200"
+          ? "border-accent-primary/60 text-accent-primary"
+          : "border-accent-primary/15 text-zinc-400 hover:border-accent-primary/50 hover:text-accent-primary transition-colors duration-200"
       )}
       animate={
         isActive
           ? {
               boxShadow: [
-                "0 0 4px rgba(0,255,255,0.15), inset 0 0 6px rgba(0,255,255,0.05)",
-                "0 0 16px rgba(0,255,255,0.55), inset 0 0 12px rgba(0,255,255,0.1)",
-                "0 0 4px rgba(0,255,255,0.15), inset 0 0 6px rgba(0,255,255,0.05)",
+                "0 0 4px rgba(var(--accent-primary-rgb),0.15), inset 0 0 6px rgba(var(--accent-primary-rgb),0.05)",
+                "0 0 16px rgba(var(--accent-primary-rgb),0.55), inset 0 0 12px rgba(var(--accent-primary-rgb),0.1)",
+                "0 0 4px rgba(var(--accent-primary-rgb),0.15), inset 0 0 6px rgba(var(--accent-primary-rgb),0.05)",
               ],
             }
           : { boxShadow: "none" }
@@ -76,7 +76,7 @@ export function NavItem({ label, href, isActive, onClick, mobile, index = 0 }: N
         <BorderBeam
           size={60}
           duration={2.5}
-          colorFrom="#22d3ee"
+          colorFrom="var(--accent-primary)"
           colorTo="#818cf8"
           borderWidth={1}
         />
@@ -84,7 +84,7 @@ export function NavItem({ label, href, isActive, onClick, mobile, index = 0 }: N
 
       {/* Scan line sweep */}
       <motion.span
-        className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/12 to-transparent pointer-events-none"
+        className="absolute inset-0 bg-gradient-to-r from-transparent via-accent-primary/12 to-transparent pointer-events-none"
         initial={{ x: "-100%" }}
         whileHover={{ x: "100%" }}
         transition={{ duration: 0.38, ease: "linear" }}
@@ -93,9 +93,9 @@ export function NavItem({ label, href, isActive, onClick, mobile, index = 0 }: N
 
       {/* Bracket-wrap label */}
       <span className="relative z-10 flex items-center gap-0">
-        <span className="text-cyan-400/35 font-mono">[</span>
-        <span className={cn(isActive ? "text-cyan-300" : "text-zinc-400")}>{label}</span>
-        <span className="text-cyan-400/35 font-mono">]</span>
+        <span className="text-accent-primary/35 font-mono">[</span>
+        <span className={cn(isActive ? "text-accent-primary" : "text-zinc-400")}>{label}</span>
+        <span className="text-accent-primary/35 font-mono">]</span>
       </span>
     </motion.div>
   );
@@ -111,7 +111,7 @@ export function NavItem({ label, href, isActive, onClick, mobile, index = 0 }: N
           href={href}
           aria-current={isActive ? "page" : undefined}
           onClick={handleClick}
-          className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/70 rounded-sm"
+          className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary/70 rounded-sm"
         >
           {inner}
         </a>
@@ -125,7 +125,7 @@ export function NavItem({ label, href, isActive, onClick, mobile, index = 0 }: N
         href={href}
         aria-current={isActive ? "page" : undefined}
         onClick={handleClick}
-        className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/70 rounded-sm"
+        className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary/70 rounded-sm"
       >
         {inner}
       </a>

@@ -1,35 +1,18 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { motion, useMotionValue, useTransform, useSpring } from "motion/react";
+import { useEffect, useState } from "react";
+import { motion } from "motion/react";
 import { MOTION } from "@/lib/motion";
 import dec from "@/components/effects/decorative.module.css";
-
-// ─── Syntax token types ──────────────────────────────────────────────────────
-type TokenKind =
-  | "keyword"
-  | "type"
-  | "string"
-  | "prop"
-  | "value"
-  | "comment"
-  | "plain"
-  | "bracket"
-  | "punctuation";
-
-interface Token {
-  text: string;
-  kind: TokenKind;
-}
-
-type CodeLine = Token[];
+import { siteConfig } from "@/config/site";
+import { CODE_LINES, TERMINAL_LINES, type CodeToken } from "@/config/hero";
 
 // ─── Color map ───────────────────────────────────────────────────────────────
-const COLOR: Record<TokenKind, string> = {
+const COLOR: Record<CodeToken["kind"], string> = {
   keyword:     "text-blue-400",
   type:        "text-yellow-300",
   string:      "text-green-400",
-  prop:        "text-cyan-300",
+  prop:        "text-accent-primary",
   value:       "text-orange-300",
   comment:     "text-zinc-500 italic",
   plain:       "text-zinc-300",
@@ -37,81 +20,23 @@ const COLOR: Record<TokenKind, string> = {
   punctuation: "text-zinc-500",
 };
 
-// ─── Code content ────────────────────────────────────────────────────────────
-const CODE_LINES: CodeLine[] = [
-  [{ text: "import", kind: "keyword" }, { text: " { Developer } ", kind: "plain" }, { text: "from", kind: "keyword" }, { text: " '@/types'", kind: "string" }],
-  [],
-  [{ text: "const ", kind: "keyword" }, { text: "leHoan", kind: "plain" }, { text: ": ", kind: "punctuation" }, { text: "Developer", kind: "type" }, { text: " = {", kind: "bracket" }],
-  [{ text: "  name", kind: "prop" }, { text: ":       ", kind: "punctuation" }, { text: '"Lê Hoàn"', kind: "string" }, { text: ",", kind: "punctuation" }],
-  [{ text: "  role", kind: "prop" }, { text: ":       ", kind: "punctuation" }, { text: '"Full-Stack Developer"', kind: "string" }, { text: ",", kind: "punctuation" }],
-  [{ text: "  location", kind: "prop" }, { text: ":   ", kind: "punctuation" }, { text: '"Vietnam 🇻🇳"', kind: "string" }, { text: ",", kind: "punctuation" }],
-  [{ text: "  experience", kind: "prop" }, { text: ": ", kind: "punctuation" }, { text: '"2yr freelance"', kind: "string" }, { text: ",", kind: "punctuation" }],
-  [{ text: "  japanese", kind: "prop" }, { text: ":   ", kind: "punctuation" }, { text: '"JLPT N3 日本語"', kind: "string" }, { text: ",", kind: "punctuation" }],
-  [{ text: "  stack", kind: "prop" }, { text: ": {", kind: "bracket" }],
-  [{ text: "    frontend", kind: "prop" }, { text: ": ", kind: "punctuation" }, { text: '["Next.js","React","TS"]', kind: "string" }, { text: ",", kind: "punctuation" }],
-  [{ text: "    backend", kind: "prop" }, { text: ":  ", kind: "punctuation" }, { text: '["Node.js","PostgreSQL"]', kind: "string" }, { text: ",", kind: "punctuation" }],
-  [{ text: "    cloud", kind: "prop" }, { text: ":    ", kind: "punctuation" }, { text: '["AWS","Docker"]', kind: "string" }, { text: ",", kind: "punctuation" }],
-  [{ text: "  },", kind: "bracket" }],
-  [{ text: "  status", kind: "prop" }, { text: ":     ", kind: "punctuation" }, { text: '"available_for_hire"', kind: "string" }, { text: " ✓", kind: "value" }],
-  [{ text: "}", kind: "bracket" }],
-];
-
-const TERMINAL_LINES = [
-  { text: "$ node portfolio.ts",          color: "text-zinc-400" },
-  { text: "> Loading profile...  100%",   color: "text-cyan-300" },
-  { text: "> Status: ONLINE — Ready to build.", color: "text-green-400" },
-];
-
 // ─── Component ───────────────────────────────────────────────────────────────
 export default function CodeEditorPanel() {
   const [terminalVisible, setTerminalVisible] = useState(0);
-  const containerRef = useRef<HTMLDivElement>(null);
 
-  // 3D tilt motion values
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const rotateX = useTransform(y, [-0.5, 0.5], [6, -6]);
-  const rotateY = useTransform(x, [-0.5, 0.5], [-6, 6]);
-  const springRotateX = useSpring(rotateX, { stiffness: 200, damping: 25 });
-  const springRotateY = useSpring(rotateY, { stiffness: 200, damping: 25 });
-
-  function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
-    const rect = containerRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    x.set((e.clientX - rect.left) / rect.width - 0.5);
-    y.set((e.clientY - rect.top) / rect.height - 0.5);
-  }
-
-  function handleMouseLeave() {
-    x.set(0);
-    y.set(0);
-  }
-
-  // Animate terminal lines in after 1.2s delay
+  // Animate terminal lines in after 300ms delay (starts when mounted = revealed)
   useEffect(() => {
     if (terminalVisible >= TERMINAL_LINES.length) return;
-    const delay = terminalVisible === 0 ? 1200 : 500;
+    const delay = terminalVisible === 0 ? 300 : 500;
     const t = setTimeout(() => setTerminalVisible((v) => v + 1), delay);
     return () => clearTimeout(t);
   }, [terminalVisible]);
 
   return (
-    <motion.div
-      ref={containerRef}
-      initial={MOTION.scaleUp.hidden}
-      animate={MOTION.scaleUp.visible}
-      transition={{ delay: 0.6 }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        rotateX: springRotateX,
-        rotateY: springRotateY,
-        transformStyle: "preserve-3d",
-        transformPerspective: 800,
-      }}
-      className="cursor-target relative w-full max-w-[420px] rounded-xl overflow-hidden
-                 border border-cyan-400/20
-                 shadow-[0_0_32px_rgba(0,255,255,0.10),0_0_80px_rgba(0,255,255,0.05)]
+    <div
+      className="relative w-full h-full rounded-xl overflow-hidden
+                 border border-accent-primary/20
+                 shadow-[0_0_32px_rgba(var(--accent-primary-rgb),0.10),0_0_80px_rgba(var(--accent-primary-rgb),0.05)]
                  cursor-default select-none"
       aria-label="VSCode-style developer profile"
     >
@@ -125,7 +50,7 @@ export default function CodeEditorPanel() {
       />
 
       {/* ── Title bar ── */}
-      <div className="relative z-20 flex items-center gap-2 px-4 py-2.5 border-b border-cyan-400/10 bg-black/40">
+      <div className="relative z-20 flex items-center gap-2 px-4 py-2.5 border-b border-accent-primary/10 bg-black/40">
         {/* Traffic lights */}
         <div className="flex gap-1.5">
           <span className="w-3 h-3 rounded-full bg-red-500/80" />
@@ -134,18 +59,18 @@ export default function CodeEditorPanel() {
         </div>
         {/* Tabs */}
         <div className="ml-3 flex items-center gap-1 text-[11px] font-mono">
-          <span className="px-3 py-1 rounded-t bg-surface-editor text-cyan-400/80 border-t border-x border-cyan-400/20 -mb-[1px]">
-            le-hoan.ts
+          <span className="px-3 py-1 rounded-t bg-surface-editor text-accent-primary/80 border-t border-x border-accent-primary/20 -mb-[1px]">
+            {siteConfig.editorTabName}
             <span className="ml-1.5 w-1.5 h-1.5 rounded-full bg-orange-400 inline-block" />
           </span>
         </div>
-        <span className="ml-auto text-[10px] font-mono text-cyan-400/40 tracking-widest uppercase">portfolio</span>
+        <span className="ml-auto text-[10px] font-mono text-accent-primary/40 tracking-widest uppercase">portfolio</span>
       </div>
 
       {/* ── Editor body ── */}
       <div className="relative z-20 flex">
         {/* Sidebar - file tree hint */}
-        <div className="w-[36px] border-r border-cyan-400/10 bg-black/20 flex flex-col gap-0.5 py-2 px-1.5 shrink-0">
+        <div className="w-[36px] border-r border-accent-primary/10 bg-black/20 flex flex-col gap-0.5 py-2 px-1.5 shrink-0">
           {CODE_LINES.map((_, i) => (
             <span key={i} className="text-[10px] font-mono text-zinc-700 text-right leading-[1.6] select-none">
               {i + 1}
@@ -168,7 +93,7 @@ export default function CodeEditorPanel() {
       </div>
 
       {/* ── Divider ── */}
-      <div className="relative z-20 border-t border-cyan-400/10 mx-0 px-3 py-1 bg-black/30 text-[9px] font-mono text-cyan-400/40 tracking-widest uppercase">
+      <div className="relative z-20 border-t border-accent-primary/10 mx-0 px-3 py-1 bg-black/30 text-[9px] font-mono text-accent-primary/40 tracking-widest uppercase">
         ─── TERMINAL ──────────────────────────────
       </div>
 
@@ -185,9 +110,9 @@ export default function CodeEditorPanel() {
           </motion.div>
         ))}
         {terminalVisible < TERMINAL_LINES.length && (
-          <span className="inline-block w-1.5 h-3.5 bg-cyan-400 animate-pulse opacity-80 align-middle" />
+          <span className="inline-block w-1.5 h-3.5 bg-accent-primary animate-pulse opacity-80 align-middle" />
         )}
       </div>
-    </motion.div>
+    </div>
   );
 }

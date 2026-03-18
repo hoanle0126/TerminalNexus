@@ -4,37 +4,10 @@ import { motion } from 'motion/react'
 import { MOTION } from '@/lib/motion'
 import dec from '@/components/effects/decorative.module.css'
 import { useTranslations } from 'next-intl'
-import { Github, Linkedin, Dribbble, Mail } from 'lucide-react'
 import { ContactForm } from './ContactForm'
 import { SocialLink } from '@/components/shared/SocialLink'
-
-const SOCIAL_LINKS = [
-  {
-    key: 'socialGithub' as const,
-    href: 'https://github.com/hoanle0126',
-    icon: <Github size={16} />,
-  },
-  {
-    key: 'socialLinkedin' as const,
-    href: 'https://linkedin.com/in/hoanle',
-    icon: <Linkedin size={16} />,
-  },
-  {
-    key: 'socialDribbble' as const,
-    href: 'https://dribbble.com/hoanle',
-    icon: <Dribbble size={16} />,
-  },
-  {
-    key: 'socialBehance' as const,
-    href: 'https://behance.net/hoanle',
-    iconUrl: 'https://cdn.simpleicons.org/behance/ffffff',
-  },
-  {
-    key: 'socialEmail' as const,
-    href: 'mailto:hoanle@example.com',
-    icon: <Mail size={16} />,
-  },
-]
+import { siteConfig } from '@/config/site'
+import { resolveSocialIcon } from '@/components/shared/socialIcons'
 
 
 
@@ -61,7 +34,7 @@ export function ContactSection() {
           whileInView={MOTION.fadeInDown.visible}
           viewport={{ once: true }}
         >
-          <p className="font-mono text-sm text-cyan-400 tracking-widest mb-3">
+          <p className="font-mono text-sm text-accent-primary tracking-widest mb-3">
             {t('label')}
           </p>
           <h2 className="font-mono text-3xl md:text-4xl font-bold text-white tracking-tight">
@@ -95,7 +68,7 @@ export function ContactSection() {
               </p>
               <a
                 href={`mailto:${t('email')}`}
-                className="font-mono text-cyan-400 hover:text-cyan-300 transition-colors duration-200 text-sm border-b border-cyan-400/30 hover:border-cyan-300/60 pb-0.5"
+                className="font-mono text-accent-primary hover:brightness-110 transition-colors duration-200 text-sm border-b border-accent-primary/30 hover:border-accent-primary/60 pb-0.5"
               >
                 {t('email')}
               </a>
@@ -107,13 +80,13 @@ export function ContactSection() {
                 {t('findMeOn')}
               </p>
               <div className="flex items-center gap-3">
-                {SOCIAL_LINKS.map((social) => (
+                {siteConfig.socials.map((social) => (
                   <SocialLink
                     key={social.key}
                     href={social.href}
                     label={t(social.key)}
-                    icon={'icon' in social ? social.icon : undefined}
-                    iconUrl={'iconUrl' in social ? social.iconUrl : undefined}
+                    icon={resolveSocialIcon(social, 16)}
+                    iconUrl={social.iconUrl}
                   />
                 ))}
               </div>
@@ -121,7 +94,7 @@ export function ContactSection() {
 
             {/* Decorative terminal hint */}
             <div className="hidden md:block font-mono text-[11px] text-gray-600 border border-white/5 rounded-lg p-4 bg-white/[0.02]">
-              <span className="text-cyan-500/60">$</span>{' '}
+              <span className="text-accent-primary/60">$</span>{' '}
               <span className="text-gray-500">git commit -m</span>{' '}
               <span className="text-green-400/60">&quot;feat: collaboration begins&quot;</span>
             </div>

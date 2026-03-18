@@ -49,8 +49,8 @@ export function ScrollToTop() {
           <ProgressRing progress={progress} />
 
           {/* Button center */}
-          <div className="w-12 h-12 rounded-full bg-gray-900/80 backdrop-blur-sm border border-white/10 group-hover:border-cyan-400/50 flex items-center justify-center transition-colors">
-            <ArrowUp className="w-4 h-4 text-gray-400 group-hover:text-cyan-400 transition-colors" />
+          <div className="w-12 h-12 rounded-full bg-gray-900/80 backdrop-blur-sm border border-white/10 group-hover:border-accent-primary/50 flex items-center justify-center transition-colors">
+            <ArrowUp className="w-4 h-4 text-gray-400 group-hover:text-accent-primary transition-colors" />
           </div>
         </motion.button>
       )}

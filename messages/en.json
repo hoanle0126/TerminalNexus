@@ -26,7 +26,9 @@
     "badge2": "⚡ React / Next.js",
     "badge3": "🎌 JLPT N3 日本語",
     "badge4": "◈ Node.js / TS",
-    "badge5": "◉ 2yr Freelance"
+    "badge5": "◉ 2yr Freelance",
+    "hoverHint": "hover to reveal",
+    "tapHint": "tap to reveal"
   },
   "terminal": {
     "title": "SYSTEM TERMINAL",

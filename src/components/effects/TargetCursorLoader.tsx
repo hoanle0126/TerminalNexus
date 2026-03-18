@@ -1,8 +1,9 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { themeConfig } from "@/config/theme";
 
-// Dynamic import with ssr: false is only valid inside a Client Component
+// Dynamic imports with ssr: false — only load the cursor variant in use
 const TargetCursor = dynamic(
   () =>
     import("@/components/effects/TargetCursor").then((m) => ({
@@ -11,6 +12,29 @@ const TargetCursor = dynamic(
   { ssr: false }
 );
 
+const DotCursor = dynamic(
+  () =>
+    import("@/components/effects/DotCursor").then((m) => ({
+      default: m.DotCursor,
+    })),
+  { ssr: false }
+);
+
+/**
+ * Renders the cursor variant selected in `themeConfig.cursorStyle`.
+ * - "target" → crosshair snap cursor (default)
+ * - "dot"    → minimal spring-following dot
+ * - "default" → native cursor (nothing rendered)
+ */
 export function TargetCursorLoader() {
-  return <TargetCursor targetSelector=".cursor-target" />;
+  if (themeConfig.cursorStyle === "dot") {
+    return <DotCursor />;
+  }
+
+  if (themeConfig.cursorStyle === "target") {
+    return <TargetCursor targetSelector=".cursor-target" />;
+  }
+
+  // "default" — use native cursor, render nothing
+  return null;
 }

@@ -21,7 +21,7 @@ export function ProgressDots({
         return (
           <motion.div
             key={i}
-            className="h-1 rounded-full bg-cyan-400"
+            className="h-1 rounded-full bg-accent-primary"
             style={{ width, opacity }}
           />
         );

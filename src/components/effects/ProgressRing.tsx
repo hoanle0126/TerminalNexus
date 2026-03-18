@@ -43,7 +43,7 @@ export function ProgressRing({
         cy={size / 2}
         r={radius}
         fill="none"
-        stroke="rgb(34,211,238)" /* cyan-400 */
+        stroke="var(--accent-primary)"
         strokeWidth={strokeWidth}
         strokeLinecap="round"
         strokeDasharray={circumference}

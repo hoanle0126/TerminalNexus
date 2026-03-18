@@ -13,8 +13,8 @@ const BADGE_CONFIG = [
   },
   {
     key: "badge2" as const,
-    color: "border-cyan-400/40 text-cyan-300",
-    glow: "rgba(0,255,255,0.2)",
+    color: "border-accent-primary/40 text-accent-primary",
+    glow: "rgba(var(--accent-primary-rgb),0.2)",
     pos: "top-[28%] right-[-16px] md:right-[-36px]",
   },
   {
@@ -25,8 +25,8 @@ const BADGE_CONFIG = [
   },
   {
     key: "badge4" as const,
-    color: "border-cyan-400/40 text-cyan-300",
-    glow: "rgba(0,255,255,0.2)",
+    color: "border-accent-primary/40 text-accent-primary",
+    glow: "rgba(var(--accent-primary-rgb),0.2)",
     pos: "bottom-[-12px] right-[-8px] md:right-[-16px]",
   },
   {

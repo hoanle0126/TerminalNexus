@@ -6,11 +6,21 @@ import dynamic from "next/dynamic";
 import GlitchText from "@/components/reactbits/GlitchText";
 import CountUp from "@/components/reactbits/CountUp";
 import BlurText from "@/components/reactbits/BlurText";
-import CodeEditorPanel from "@/components/hero/CodeEditorPanel";
 import FloatingBadges from "@/components/hero/FloatingBadges";
 import { FadeUp } from "@/components/hero/FadeUp";
 import { TypewriterRole } from "@/components/hero/TypewriterRole";
 import { ArrowRight } from "lucide-react";
+
+// HeroProfileCard uses PixelTransition (GSAP + window) — no SSR
+const HeroProfileCard = dynamic(
+  () => import("@/components/hero/HeroProfileCard"),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="w-full max-w-[420px] aspect-[5/6] rounded-xl border border-accent-primary/20 bg-surface-card animate-pulse" />
+    ),
+  }
+);
 
 // FaultyTerminal uses WebGL — load only on client with no SSR
 const FaultyTerminal = dynamic(
@@ -34,11 +44,7 @@ interface HeroSectionProps {
 }
 
 // ─── Constants ─────────────────────────────────────────────────────────────────
-const STATS = [
-  { label: "Years of exp.", value: 3, suffix: "+" },
-  { label: "Projects shipped", value: 15, suffix: "+" },
-  { label: "Technologies", value: 20, suffix: "+" },
-];
+import { HERO_STATS as STATS } from "@/config/hero";
 
 // ─── Main HeroSection ─────────────────────────────────────────────────────────
 export default function HeroSection({ hero }: HeroSectionProps) {
@@ -53,7 +59,7 @@ export default function HeroSection({ hero }: HeroSectionProps) {
         className="pointer-events-none absolute inset-0 -z-10"
         style={{
           background:
-            "radial-gradient(ellipse 60% 50% at 20% 50%, rgba(0,255,255,0.05) 0%, transparent 70%), radial-gradient(ellipse 50% 60% at 80% 30%, rgba(120,80,255,0.06) 0%, transparent 70%)",
+            "radial-gradient(ellipse 60% 50% at 20% 50%, rgba(var(--accent-primary-rgb),0.05) 0%, transparent 70%), radial-gradient(ellipse 50% 60% at 80% 30%, rgba(120,80,255,0.06) 0%, transparent 70%)",
         }}
       />
 
@@ -63,7 +69,7 @@ export default function HeroSection({ hero }: HeroSectionProps) {
         className="pointer-events-none absolute inset-0 -z-10 opacity-[0.03]"
         style={{
           backgroundImage:
-            "repeating-linear-gradient(0deg, transparent, transparent 24px, rgba(0,255,255,1) 25px), repeating-linear-gradient(90deg, transparent, transparent 24px, rgba(0,255,255,1) 25px)",
+            "repeating-linear-gradient(0deg, transparent, transparent 24px, rgba(var(--accent-primary-rgb),1) 25px), repeating-linear-gradient(90deg, transparent, transparent 24px, rgba(var(--accent-primary-rgb),1) 25px)",
         }}
       />
 
@@ -85,7 +91,7 @@ export default function HeroSection({ hero }: HeroSectionProps) {
             {/* Greeting */}
             <FadeUp delay={0.2}>
               <p className="font-mono text-lg text-zinc-400">
-                <span className="text-cyan-500">//</span>&nbsp;{hero.greeting}
+                <span className="text-accent-primary">//</span>&nbsp;{hero.greeting}
               </p>
             </FadeUp>
 
@@ -96,7 +102,7 @@ export default function HeroSection({ hero }: HeroSectionProps) {
                   speed={0.4}
                   enableShadows
                   enableOnHover={false}
-                  className="!text-[clamp(2.8rem,8vw,5.5rem)] !font-black bg-gradient-to-r from-white via-cyan-200 to-cyan-400 bg-clip-text text-transparent"
+                  className="!text-[clamp(2.8rem,8vw,5.5rem)] !font-black bg-gradient-to-r from-white via-accent-primary/60 to-accent-primary bg-clip-text text-transparent"
                 >
                   {hero.name}
                 </GlitchText>
@@ -124,7 +130,7 @@ export default function HeroSection({ hero }: HeroSectionProps) {
               <div className="flex flex-wrap gap-3 pt-1">
                 <Link
                   href="#projects"
-                  className="cursor-target group relative inline-flex items-center gap-2 px-6 py-3 rounded-lg font-mono text-sm font-bold tracking-widest text-black bg-cyan-400 overflow-hidden transition-all duration-300 hover:bg-cyan-300 hover:shadow-[0_0_24px_rgba(0,255,255,0.5)] active:scale-95"
+                  className="cursor-target group relative inline-flex items-center gap-2 px-6 py-3 rounded-lg font-mono text-sm font-bold tracking-widest text-black bg-accent-primary overflow-hidden transition-all duration-300 hover:brightness-110 hover:shadow-[0_0_24px_rgba(var(--accent-primary-rgb),0.5)] active:scale-95"
                 >
                   <span className="relative z-10">{hero.viewProjects}</span>
                   <ArrowRight className="relative z-10 w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" strokeWidth={2.5} />
@@ -132,7 +138,7 @@ export default function HeroSection({ hero }: HeroSectionProps) {
 
                 <Link
                   href="#contact"
-                  className="cursor-target inline-flex items-center gap-2 px-6 py-3 rounded-lg font-mono text-sm font-bold tracking-widest text-cyan-400 border border-cyan-500/40 bg-cyan-500/5 transition-all duration-300 hover:border-cyan-400/70 hover:bg-cyan-500/10 hover:shadow-[0_0_16px_rgba(0,255,255,0.15)] active:scale-95"
+                  className="cursor-target inline-flex items-center gap-2 px-6 py-3 rounded-lg font-mono text-sm font-bold tracking-widest text-accent-primary border border-accent-primary/40 bg-accent-primary/5 transition-all duration-300 hover:border-accent-primary/70 hover:bg-accent-primary/10 hover:shadow-[0_0_16px_rgba(var(--accent-primary-rgb),0.15)] active:scale-95"
                 >
                   {hero.contact}
                 </Link>
@@ -152,7 +158,7 @@ export default function HeroSection({ hero }: HeroSectionProps) {
                         delay={1}
                         className="tabular-nums"
                       />
-                      <span className="text-cyan-400">{stat.suffix}</span>
+                      <span className="text-accent-primary">{stat.suffix}</span>
                     </div>
                     <span className="text-xs text-zinc-500 font-mono tracking-wider uppercase">
                       {stat.label}
@@ -187,9 +193,9 @@ export default function HeroSection({ hero }: HeroSectionProps) {
               />
             </div>
 
-            {/* Code Editor Panel + Floating badges */}
+            {/* Profile Card (Pixel Transition) + Floating badges */}
             <div className="relative w-full flex items-center justify-center">
-              <CodeEditorPanel />
+              <HeroProfileCard />
               <FloatingBadges />
             </div>
           </div>
@@ -207,7 +213,7 @@ export default function HeroSection({ hero }: HeroSectionProps) {
           SCROLL
         </span>
         <motion.div
-          className="w-0.5 h-8 bg-gradient-to-b from-cyan-500/60 to-transparent rounded-full"
+          className="w-0.5 h-8 bg-gradient-to-b from-accent-primary/60 to-transparent rounded-full"
           animate={{ scaleY: [1, 0.5, 1], opacity: [0.6, 1, 0.6] }}
           transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
         />

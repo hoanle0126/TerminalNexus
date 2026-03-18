@@ -60,7 +60,7 @@ export function ProjectFlipCard({ project }: Props) {
             <h3 className="font-mono text-xl md:text-2xl font-bold text-white drop-shadow-lg">
               {project.title}
             </h3>
-            <p className="font-mono text-xs text-cyan-400/70 mt-1 tracking-widest">
+            <p className="font-mono text-xs text-accent-primary/70 mt-1 tracking-widest">
               {t('hoverToFlip')}
             </p>
           </div>
@@ -68,13 +68,13 @@ export function ProjectFlipCard({ project }: Props) {
 
         {/* ======================== BACK FACE ======================== */}
         <div
-          className="absolute inset-0 rounded-2xl overflow-hidden border border-cyan-400/30 bg-gray-950/95 backdrop-blur-xl p-6 md:p-8 flex flex-col justify-between"
+          className="absolute inset-0 rounded-2xl overflow-hidden border border-accent-primary/30 bg-gray-950/95 backdrop-blur-xl p-6 md:p-8 flex flex-col justify-between"
           style={{
             backfaceVisibility: 'hidden',
             transform: 'rotateY(180deg)',
           }}
         >
-          <div className="absolute top-0 right-0 w-48 h-48 rounded-full bg-cyan-500/5 blur-3xl pointer-events-none" />
+          <div className="absolute top-0 right-0 w-48 h-48 rounded-full bg-accent-primary/5 blur-3xl pointer-events-none" />
           <div className="absolute bottom-0 left-0 w-32 h-32 rounded-full bg-purple-500/5 blur-2xl pointer-events-none" />
 
           <div className="relative z-10">
@@ -89,7 +89,7 @@ export function ProjectFlipCard({ project }: Props) {
                 <Badge
                   key={tech}
                   variant="outline"
-                  className="font-mono text-[10px] bg-white/5 border-white/10 text-gray-300 hover:bg-cyan-500/10 hover:border-cyan-400/30 hover:text-cyan-300 transition-colors"
+                  className="font-mono text-[10px] bg-white/5 border-white/10 text-gray-300 hover:bg-accent-primary/10 hover:border-accent-primary/30 hover:text-accent-primary transition-colors"
                 >
                   {tech}
                 </Badge>
@@ -104,7 +104,7 @@ export function ProjectFlipCard({ project }: Props) {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="cursor-target inline-flex items-center px-5 py-2 rounded-md font-mono font-bold text-sm text-black bg-cyan-500 hover:bg-cyan-400 transition-all duration-200 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)]"
+                className="cursor-target inline-flex items-center px-5 py-2 rounded-md font-mono font-bold text-sm text-black bg-accent-primary hover:brightness-110 transition-all duration-200 hover:shadow-[0_0_20px_rgba(var(--accent-primary-rgb),0.4)]"
               >
                 {t('viewDemo')}
               </a>

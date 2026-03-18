@@ -3,44 +3,11 @@
 import { motion } from 'motion/react'
 import { MOTION } from '@/lib/motion'
 import { useTranslations } from 'next-intl'
-import { Github, Linkedin, Dribbble, Mail, Terminal } from 'lucide-react'
+import { Terminal } from 'lucide-react'
 import { SocialLink } from '@/components/shared/SocialLink'
-
-const NAV_LINKS = [
-  { key: 'home' as const, href: '#home' },
-  { key: 'about' as const, href: '#about' },
-  { key: 'skills' as const, href: '#skills' },
-  { key: 'projects' as const, href: '#projects' },
-  { key: 'contact' as const, href: '#contact' },
-]
-
-const SOCIAL_LINKS = [
-  {
-    key: 'socialGithub' as const,
-    href: 'https://github.com/hoanle0126',
-    icon: <Github size={15} />,
-  },
-  {
-    key: 'socialLinkedin' as const,
-    href: 'https://linkedin.com/in/hoanle',
-    icon: <Linkedin size={15} />,
-  },
-  {
-    key: 'socialDribbble' as const,
-    href: 'https://dribbble.com/hoanle',
-    icon: <Dribbble size={15} />,
-  },
-  {
-    key: 'socialBehance' as const,
-    href: 'https://behance.net/hoanle',
-    iconUrl: 'https://cdn.simpleicons.org/behance/ffffff',
-  },
-  {
-    key: 'socialEmail' as const,
-    href: 'mailto:hoanle@example.com',
-    icon: <Mail size={15} />,
-  },
-]
+import { siteConfig } from '@/config/site'
+import { NAV_ITEMS } from '@/config/navigation'
+import { resolveSocialIcon } from '@/components/shared/socialIcons'
 
 export function Footer() {
   const t = useTranslations('footer')
@@ -61,11 +28,11 @@ export function Footer() {
           <div className="space-y-5">
             {/* Logo — bê nguyên từ header */}
             <div className="flex items-center gap-2 font-mono text-lg font-bold tracking-widest text-white">
-              <Terminal className="h-5 w-5 text-cyan-400 shrink-0" aria-hidden="true" />
-              <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-green-400 bg-clip-text text-transparent">
-                LE HOAN
+              <Terminal className="h-5 w-5 text-accent-primary shrink-0" aria-hidden="true" />
+              <span className="bg-gradient-to-r from-accent-primary via-purple-400 to-green-400 bg-clip-text text-transparent">
+                {siteConfig.displayName}
               </span>
-              <span className="text-cyan-400/60 animate-pulse">_</span>
+              <span className="text-accent-primary/60 animate-pulse">_</span>
             </div>
             {/* Tagline — mô tả dài hơn */}
             <p className="text-sm text-gray-400 leading-relaxed max-w-xs">
@@ -73,7 +40,7 @@ export function Footer() {
             </p>
             {/* Decorative dot row */}
             <div className="flex gap-1.5">
-              {['bg-cyan-400', 'bg-purple-400', 'bg-pink-400'].map((color, i) => (
+              {['bg-accent-primary', 'bg-purple-400', 'bg-pink-400'].map((color, i) => (
                 <span key={i} className={`w-1.5 h-1.5 rounded-full ${color} opacity-60`} />
               ))}
             </div>
@@ -85,18 +52,18 @@ export function Footer() {
               {t('quickLinks')}
             </p>
             <ul className="space-y-2">
-              {NAV_LINKS.map(({ key, href }) => (
+              {NAV_ITEMS.map(({ key, href }) => (
                 <li key={key}>
                   <a
                     href={href}
                     className="
                       group flex items-center gap-2
                       font-mono text-sm text-gray-400
-                      hover:text-cyan-400
+                      hover:text-accent-primary
                       transition-colors duration-200
                     "
                   >
-                    <span className="opacity-0 group-hover:opacity-100 transition-opacity text-cyan-400 text-xs">›</span>
+                    <span className="opacity-0 group-hover:opacity-100 transition-opacity text-accent-primary text-xs">›</span>
                     {t(`nav.${key}`)}
                   </a>
                 </li>
@@ -110,13 +77,13 @@ export function Footer() {
               {t('connect')}
             </p>
             <div className="flex flex-wrap gap-2.5">
-              {SOCIAL_LINKS.map((social) => (
+              {siteConfig.socials.map((social) => (
                 <SocialLink
                   key={social.key}
                   href={social.href}
                   label={tContact(social.key)}
-                  icon={'icon' in social ? social.icon : undefined}
-                  iconUrl={'iconUrl' in social ? social.iconUrl : undefined}
+                  icon={resolveSocialIcon(social, 15)}
+                  iconUrl={social.iconUrl}
                 />
               ))}
             </div>

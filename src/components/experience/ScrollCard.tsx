@@ -55,7 +55,7 @@ export function ScrollCard({ item, cardIndex, springIndex }: ScrollCardProps) {
           bg-surface-panel
         `}
       >
-        <div className="absolute inset-0 rounded-2xl pointer-events-none shadow-[inset_0_0_30px_rgba(0,255,255,0.03)]" />
+        <div className="absolute inset-0 rounded-2xl pointer-events-none" style={{ boxShadow: "inset 0 0 30px rgba(var(--accent-primary-rgb),0.03)" }} />
 
         <span className="absolute top-3 right-4 text-[80px] leading-none font-bold text-white/[0.04] font-mono select-none pointer-events-none">
           {item.chapter}

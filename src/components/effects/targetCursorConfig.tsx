@@ -41,11 +41,11 @@ interface CornerProps {
 export function Corner({ borderClass, x, y }: CornerProps) {
   return (
     <motion.div
-      className={`absolute w-3 h-3 border-[3px] border-cyan-400 ${borderClass}`}
+      className={`absolute w-3 h-3 border-[3px] border-accent-primary ${borderClass}`}
       style={{
         top: "50%",
         left: "50%",
-        filter: "drop-shadow(0 0 3px rgba(0,255,255,0.8))",
+        filter: "drop-shadow(0 0 3px rgba(var(--accent-primary-rgb),0.8))",
         willChange: "transform",
       }}
       animate={{ x, y }}

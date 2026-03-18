@@ -26,7 +26,7 @@ const GlitchText: FC<GlitchTextProps> = ({
     '--after-duration': `${speed * 3}s`,
     '--before-duration': `${speed * 2}s`,
     '--after-shadow': enableShadows ? '-5px 0 red' : 'none',
-    '--before-shadow': enableShadows ? '5px 0 cyan' : 'none'
+    '--before-shadow': enableShadows ? '5px 0 var(--accent-primary)' : 'none'
   };
 
   const baseClasses = 'text-white text-[clamp(2rem,10vw,8rem)] font-black relative mx-auto select-none cursor-pointer';

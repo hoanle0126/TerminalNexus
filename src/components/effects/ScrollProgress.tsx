@@ -13,7 +13,7 @@ import { ScrollProgress as BaseScrollProgress } from "@/components/ui/scroll-pro
 export function ScrollProgress() {
   return (
     <BaseScrollProgress
-      className="z-[60] h-[2px] bg-linear-to-r from-cyan-400 via-purple-500 to-green-400 shadow-[0_0_8px_1px_rgba(34,211,238,0.5)]"
+      className="z-[60] h-[2px] bg-linear-to-r from-accent-primary via-purple-500 to-green-400 shadow-[0_0_8px_1px_rgba(var(--accent-primary-rgb),0.5)]"
       aria-hidden="true"
     />
   );

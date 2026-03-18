@@ -45,7 +45,7 @@ export function ContactForm() {
           placeholder={t('namePlaceholder')}
           value={formData.name}
           onChange={(e) => setFormData((p) => ({ ...p, name: e.target.value }))}
-          className="cursor-target bg-white/5 border-white/10 font-mono text-white placeholder:text-gray-600 focus-visible:ring-cyan-400/50 focus-visible:border-cyan-400/50"
+          className="cursor-target bg-white/5 border-white/10 font-mono text-white placeholder:text-gray-600 focus-visible:ring-accent-primary/50 focus-visible:border-accent-primary/50"
         />
       </div>
 
@@ -61,7 +61,7 @@ export function ContactForm() {
           placeholder={t('emailPlaceholder')}
           value={formData.email}
           onChange={(e) => setFormData((p) => ({ ...p, email: e.target.value }))}
-          className="cursor-target bg-white/5 border-white/10 font-mono text-white placeholder:text-gray-600 focus-visible:ring-cyan-400/50 focus-visible:border-cyan-400/50"
+          className="cursor-target bg-white/5 border-white/10 font-mono text-white placeholder:text-gray-600 focus-visible:ring-accent-primary/50 focus-visible:border-accent-primary/50"
         />
       </div>
 
@@ -77,7 +77,7 @@ export function ContactForm() {
           placeholder={t('messagePlaceholder')}
           value={formData.message}
           onChange={(e) => setFormData((p) => ({ ...p, message: e.target.value }))}
-          className="cursor-target bg-white/5 border-white/10 font-mono text-white placeholder:text-gray-600 resize-none focus-visible:ring-cyan-400/50 focus-visible:border-cyan-400/50"
+          className="cursor-target bg-white/5 border-white/10 font-mono text-white placeholder:text-gray-600 resize-none focus-visible:ring-accent-primary/50 focus-visible:border-accent-primary/50"
         />
       </div>
 
@@ -85,7 +85,7 @@ export function ContactForm() {
       <motion.div {...MOTION.tapShrink}>
         <Button
           type="submit"
-          className="cursor-target w-full font-mono font-bold tracking-widest bg-cyan-500 hover:bg-cyan-400 text-black transition-colors duration-200"
+          className="cursor-target w-full font-mono font-bold tracking-widest bg-accent-primary hover:brightness-110 text-black transition-colors duration-200"
         >
           {t('send')}
         </Button>

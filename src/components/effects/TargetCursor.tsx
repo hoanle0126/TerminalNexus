@@ -54,12 +54,12 @@ export function TargetCursor({
 
         {/* Centre dot */}
         <div
-          className="absolute w-1.5 h-1.5 bg-cyan-400 rounded-full"
+          className="absolute w-1.5 h-1.5 bg-accent-primary rounded-full"
           style={{
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            boxShadow: "0 0 6px rgba(0,255,255,0.9)",
+            boxShadow: "0 0 6px rgba(var(--accent-primary-rgb),0.9)",
           }}
         />
       </motion.div>
@@ -76,8 +76,8 @@ export function TargetCursor({
             left: snapRect.left - BORDER_W,
             width: snapRect.width + BORDER_W * 2,
             height: snapRect.height + BORDER_W * 2,
-            border: "1px solid rgba(0,255,255,0.15)",
-            boxShadow: "0 0 12px rgba(0,255,255,0.06)",
+            border: "1px solid rgba(var(--accent-primary-rgb),0.15)",
+            boxShadow: "0 0 12px rgba(var(--accent-primary-rgb),0.06)",
           }}
         />
       )}

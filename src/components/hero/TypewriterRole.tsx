@@ -39,10 +39,10 @@ export function TypewriterRole() {
   }, [displayed, isDeleting, roleIndex]);
 
   return (
-    <div className="flex items-center gap-2 font-mono text-xl md:text-2xl text-cyan-400">
-      <span className="text-cyan-600 select-none">&gt;&nbsp;</span>
+    <div className="flex items-center gap-2 font-mono text-xl md:text-2xl text-accent-primary">
+      <span className="text-accent-primary/60 select-none">&gt;&nbsp;</span>
       <span>{displayed}</span>
-      <span className="inline-block w-0.5 h-6 bg-cyan-400 animate-blink-cursor" />
+      <span className="inline-block w-0.5 h-6 bg-accent-primary animate-blink-cursor" />
     </div>
   );
 }

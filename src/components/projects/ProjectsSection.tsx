@@ -13,7 +13,7 @@ export function ProjectsSection() {
       className="relative w-full py-24 md:py-32 overflow-hidden"
     >
       {/* Background — subtle gradient consistent with other sections */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-950/5 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-accent-primary/5 to-transparent pointer-events-none" />
       {/* Subtle grid pattern */}
       <div
         className={`absolute inset-0 opacity-[0.03] pointer-events-none ${dec.gridCyanSoft}`}
@@ -22,7 +22,7 @@ export function ProjectsSection() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section heading */}
         <div className="text-center mb-16">
-          <p className="font-mono text-sm text-cyan-400 tracking-widest mb-3">
+          <p className="font-mono text-sm text-accent-primary tracking-widest mb-3">
             {t('label')}
           </p>
           <h2 className="font-mono text-3xl md:text-4xl font-bold text-white tracking-tight">

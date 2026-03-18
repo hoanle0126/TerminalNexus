@@ -9,6 +9,8 @@ import { ScrollProgress } from "@/components/effects/ScrollProgress";
 import { TargetCursorLoader } from "@/components/effects/TargetCursorLoader";
 import { BackgroundNoise } from "@/components/effects/BackgroundNoise";
 import { ScrollToTop } from "@/components/effects/ScrollToTop";
+import ThemeProvider from "@/components/effects/ThemeProvider";
+import { siteConfig } from "@/config/site";
 
 // ─── Fonts ────────────────────────────────────────────────────────────────────
 const jetbrainsMono = JetBrains_Mono({
@@ -32,7 +34,7 @@ export async function generateMetadata({
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "meta" });
 
-  const baseUrl = "https://hoanle.dev"; // update with your domain
+  const baseUrl = siteConfig.domain;
   const title = t("title");
   const description = t("description");
 
@@ -52,7 +54,7 @@ export async function generateMetadata({
       url: `${baseUrl}/${locale}`,
       title,
       description,
-      siteName: "Lê Hoàn — Portfolio",
+      siteName: siteConfig.ogSiteName,
       images: [
         {
           url: `${baseUrl}/og-image.png`,
@@ -67,7 +69,7 @@ export async function generateMetadata({
       title,
       description,
       images: [`${baseUrl}/og-image.png`],
-      creator: "@hoanle",
+      creator: siteConfig.twitterHandle,
     },
     robots: {
       index: true,
@@ -102,11 +104,13 @@ export default async function LocaleLayout({
   const messages = (await import(`../../../messages/${locale}.json`)).default;
 
   return (
-    <html lang={locale} className="dark scroll-smooth">
+    <html lang={locale} className="dark scroll-smooth" suppressHydrationWarning>
       <body
         className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased text-white min-h-screen`}
       >
         <NextIntlClientProvider locale={locale} messages={messages}>
+          {/* Theme accent color injector */}
+          <ThemeProvider />
           {/* Global background noise overlay — CRT scanlines + film grain */}
           <BackgroundNoise />
           {/* Custom crosshair cursor — SSR false, mobile-safe */}
