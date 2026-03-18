@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 import HeroSection from "@/components/HeroSection";
 import ExperienceSection from "@/components/ExperienceSection";
 import SkillsSection from "@/components/SkillsSection";
+import { ProjectsSection } from "@/components/projects/ProjectsSection";
 
 export default async function Home({
   params,
@@ -43,6 +44,7 @@ export default async function Home({
         nextBtn={tExperience("nextBtn")}
       />
       <SkillsSection />
+      <ProjectsSection />
     </>
   );
 }

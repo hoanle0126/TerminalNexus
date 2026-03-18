@@ -52,12 +52,10 @@
     "opsTools": "Vận hành & Công cụ"
   },
   "projects": {
-    "title": "Kho Dự Án",
-    "subtitle": "Khám phá các dự án mã nguồn mở",
-    "viewProject": "Xem dự án",
-    "viewCode": "Xem mã nguồn",
-    "stars": "Sao",
-    "forks": "Fork"
+    "label": "// 04. DỰ ÁN",
+    "title": "PROJECT VAULT",
+    "viewDemo": "Xem Demo →",
+    "hoverToFlip": "di chuột để xem"
   },
   "contact": {
     "title": "Liên hệ",

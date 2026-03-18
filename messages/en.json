@@ -52,12 +52,10 @@
     "opsTools": "Ops & Tools"
   },
   "projects": {
-    "title": "Project Vault",
-    "subtitle": "Explore my open-source projects",
-    "viewProject": "View Project",
-    "viewCode": "View Code",
-    "stars": "Stars",
-    "forks": "Forks"
+    "label": "// 04. PROJECTS",
+    "title": "PROJECT VAULT",
+    "viewDemo": "View Demo →",
+    "hoverToFlip": "hover to reveal"
   },
   "contact": {
     "title": "Get in Touch",
