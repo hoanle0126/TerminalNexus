@@ -341,7 +341,7 @@ export default function ExperienceCarousel({ title, subtitle }: ExperienceCarous
       {/* ── DESKTOP: Scroll-sticky carousel ──────────────────────────────────── */}
       <div
         ref={containerRef}
-        id="experience"
+        id="about"
         // Each card gets one full viewport of scroll travel
         style={{ height: `${N * 100}vh` }}
         className="relative hidden md:block"

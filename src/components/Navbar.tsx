@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useTranslations } from "next-intl";
-import { Link, usePathname, useRouter } from "@/i18n/routing";
+import { Link, usePathname } from "@/i18n/routing";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Terminal } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -14,6 +14,7 @@ import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 interface NavItemDef {
   key: "home" | "about" | "skills" | "projects" | "contact";
   href: string;
+  sectionId: string; // The DOM id to observe
 }
 
 interface NavItemProps {
@@ -27,17 +28,40 @@ interface NavItemProps {
 
 // ─── Config ───────────────────────────────────────────────────────────────────
 const NAV_ITEMS: NavItemDef[] = [
-  { key: "home",     href: "/" },
-  { key: "about",    href: "/#about" },
-  { key: "skills",   href: "/#skills" },
-  { key: "projects", href: "/#projects" },
-  { key: "contact",  href: "/#contact" },
+  { key: "home",     href: "/",          sectionId: "home" },
+  { key: "about",    href: "/#about",    sectionId: "about" },
+  { key: "skills",   href: "/#skills",   sectionId: "skills" },
+  { key: "projects", href: "/#projects", sectionId: "projects" },
+  { key: "contact",  href: "/#contact",  sectionId: "contact" },
 ];
 
 const SCROLL_THRESHOLD = 20;
 
 // ─── NavItem ──────────────────────────────────────────────────────────────────
 function NavItem({ label, href, isActive, onClick, mobile, index = 0 }: NavItemProps) {
+  const handleClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>) => {
+      // Extract the hash from the href (e.g. "/#about" → "#about")
+      const hash = href.includes("#") ? `#${href.split("#")[1]}` : "";
+      if (hash) {
+        e.preventDefault();
+        const target = document.querySelector(hash);
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth" });
+          // Update browser URL without triggering navigation
+          window.history.pushState(null, "", `${window.location.pathname}${hash}`);
+        }
+      } else {
+        // For "/" (home), scroll to top
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        window.history.pushState(null, "", window.location.pathname);
+      }
+      onClick?.();
+    },
+    [href, onClick]
+  );
+
   const inner = (
     <motion.div
       role="menuitem"
@@ -49,7 +73,6 @@ function NavItem({ label, href, isActive, onClick, mobile, index = 0 }: NavItemP
           ? "border-cyan-400/60 text-cyan-300"
           : "border-cyan-400/15 text-zinc-400 hover:border-cyan-400/50 hover:text-cyan-300 transition-colors duration-200"
       )}
-      // Active: breathing glow via boxShadow animation (Framer Motion fallback)
       animate={
         isActive
           ? {
@@ -78,7 +101,7 @@ function NavItem({ label, href, isActive, onClick, mobile, index = 0 }: NavItemP
         />
       )}
 
-      {/* Scan line sweep: horizontal gradient, clips inside overflow-hidden parent */}
+      {/* Scan line sweep */}
       <motion.span
         className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/12 to-transparent pointer-events-none"
         initial={{ x: "-100%" }}
@@ -103,28 +126,28 @@ function NavItem({ label, href, isActive, onClick, mobile, index = 0 }: NavItemP
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: index * 0.045, duration: 0.18, ease: "easeOut" }}
       >
-        <Link
+        <a
           href={href}
           aria-current={isActive ? "page" : undefined}
-          onClick={onClick}
+          onClick={handleClick}
           className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/70 rounded-sm"
         >
           {inner}
-        </Link>
+        </a>
       </motion.li>
     );
   }
 
   return (
     <li>
-      <Link
+      <a
         href={href}
         aria-current={isActive ? "page" : undefined}
-        onClick={onClick}
+        onClick={handleClick}
         className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/70 rounded-sm"
       >
         {inner}
-      </Link>
+      </a>
     </li>
   );
 }
@@ -133,28 +156,46 @@ function NavItem({ label, href, isActive, onClick, mobile, index = 0 }: NavItemP
 export function Navbar() {
   const t = useTranslations("nav");
   const pathname = usePathname();
-  const router = useRouter();
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const [activeHash, setActiveHash] = useState("");
+  const [activeSection, setActiveSection] = useState("home");
 
-  // ── Scroll detection ────────────────
+  // ── Scroll detection (header bg) + active section tracking ──
   useEffect(() => {
-    const onScroll = () => {
+    const sectionIds = NAV_ITEMS.map((item) => item.sectionId);
+
+    const detectActiveSection = () => {
+      // Header background toggle
       setIsScrolled(window.scrollY > SCROLL_THRESHOLD);
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
-  // ── Hash tracking for active nav ────
-  useEffect(() => {
-    const onHashChange = () => setActiveHash(window.location.hash);
-    onHashChange();
-    window.addEventListener("hashchange", onHashChange);
-    return () => window.removeEventListener("hashchange", onHashChange);
+      // At the very top → home
+      if (window.scrollY < 100) {
+        setActiveSection("home");
+        return;
+      }
+
+      // Walk through sections in DOM order; pick the last one whose
+      // top has scrolled past the navbar (80px offset).
+      const OFFSET = 120; // px below viewport top to consider "entered"
+      let current = "home";
+
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        const rect = el.getBoundingClientRect();
+        // Section top is above the offset line → we're inside or past it
+        if (rect.top <= OFFSET) {
+          current = id;
+        }
+      }
+
+      setActiveSection(current);
+    };
+
+    detectActiveSection();
+    window.addEventListener("scroll", detectActiveSection, { passive: true });
+    return () => window.removeEventListener("scroll", detectActiveSection);
   }, [pathname]);
 
   // ── Close mobile on ESC ─────────────
@@ -175,11 +216,10 @@ export function Navbar() {
 
   // ── Active detection ─────────────────
   const isActive = useCallback(
-    (href: string) => {
-      if (href === "/") return pathname === "/" && !activeHash;
-      return activeHash === href.replace("/", "");
+    (item: NavItemDef) => {
+      return activeSection === item.sectionId;
     },
-    [pathname, activeHash]
+    [activeSection]
   );
 
   const scrollToContact = useCallback(() => {
@@ -224,12 +264,12 @@ export function Navbar() {
           aria-label="Main menu"
           className="hidden md:flex items-center gap-3"
         >
-          {NAV_ITEMS.map(({ key, href }) => (
+          {NAV_ITEMS.map((item) => (
             <NavItem
-              key={key}
-              label={t(key)}
-              href={href}
-              isActive={isActive(href)}
+              key={item.key}
+              label={t(item.key)}
+              href={item.href}
+              isActive={isActive(item)}
             />
           ))}
         </ul>
@@ -305,12 +345,12 @@ export function Navbar() {
               role="menu"
               className="mx-auto max-w-7xl px-4 py-4 flex flex-col gap-1.5"
             >
-              {NAV_ITEMS.map(({ key, href }, i) => (
+              {NAV_ITEMS.map((item, i) => (
                 <NavItem
-                  key={key}
-                  label={t(key)}
-                  href={href}
-                  isActive={isActive(href)}
+                  key={item.key}
+                  label={t(item.key)}
+                  href={item.href}
+                  isActive={isActive(item)}
                   onClick={() => setIsMobileOpen(false)}
                   mobile
                   index={i}
