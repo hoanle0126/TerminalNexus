@@ -372,13 +372,13 @@ export default function ExperienceCarousel({ title, subtitle }: ExperienceCarous
 
             {/* Section heading */}
             <div className="text-center mb-4">
-              <p className="font-mono text-sm tracking-widest text-cyan-400/60 mb-2">
+              <p className="font-mono text-sm tracking-widest text-cyan-400/80 mb-2">
                 {"// 02. EXPERIENCE"}
               </p>
               <h2 className="text-4xl md:text-5xl font-bold font-mono tracking-tight text-white">
                 {title}
               </h2>
-              <p className="mt-3 font-mono text-sm text-gray-500">{subtitle}</p>
+              <p className="mt-3 font-mono text-sm text-gray-400">{subtitle}</p>
               <div className="mx-auto mt-5 h-px w-24 bg-gradient-to-r from-transparent via-cyan-500 to-transparent" />
             </div>
 
@@ -421,13 +421,13 @@ export default function ExperienceCarousel({ title, subtitle }: ExperienceCarous
       >
         <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
           <div className="mb-12 text-center">
-            <p className="mb-2 font-mono text-sm tracking-widest text-cyan-400/60">
+            <p className="mb-2 font-mono text-sm tracking-widest text-cyan-400/80">
               {"// 02. EXPERIENCE"}
             </p>
             <h2 className="text-3xl font-bold font-mono tracking-tight text-white">
               {title}
             </h2>
-            <p className="mt-3 font-mono text-sm text-gray-500">{subtitle}</p>
+            <p className="mt-3 font-mono text-sm text-gray-400">{subtitle}</p>
             <div className="mx-auto mt-5 h-px w-24 bg-gradient-to-r from-transparent via-cyan-500 to-transparent" />
           </div>
           <MobileTimeline items={EXPERIENCE_DATA} />

@@ -127,10 +127,10 @@ export function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="font-mono text-xs text-gray-600 italic text-center sm:text-left max-w-sm">
+          <p className="font-mono text-xs text-gray-400 italic text-center sm:text-left max-w-sm">
             &ldquo;{t('quote')}&rdquo;
           </p>
-          <p className="font-mono text-xs text-gray-600 text-center sm:text-right whitespace-nowrap">
+          <p className="font-mono text-xs text-gray-400 text-center sm:text-right whitespace-nowrap">
             {t('copyright')}
           </p>
         </div>

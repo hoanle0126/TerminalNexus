@@ -334,6 +334,7 @@ function SkillNode({
             borderColor: isHighlighted ? iconColor : `${cluster.color}44`,
           }}
           transition={{ duration: 0.15 }}
+          aria-label={skill.label}
           className="w-16 h-16 rounded-full border-2 flex items-center justify-center cursor-default"
           style={{
             background: isHighlighted

@@ -1,10 +1,32 @@
+import dynamic from "next/dynamic";
 import { getTranslations } from "next-intl/server";
 import HeroSection from "@/components/HeroSection";
-import ExperienceSection from "@/components/ExperienceSection";
-import SkillsSection from "@/components/SkillsSection";
-import { ProjectsSection } from "@/components/projects/ProjectsSection";
-import { ContactSection } from "@/components/contact/ContactSection";
-import { Footer } from "@/components/footer/Footer";
+
+const ExperienceSection = dynamic(
+  () => import("@/components/ExperienceSection"),
+  { ssr: true }
+);
+const SkillsSection = dynamic(() => import("@/components/SkillsSection"), {
+  ssr: true,
+});
+const ProjectsSection = dynamic(
+  () =>
+    import("@/components/projects/ProjectsSection").then(
+      (mod) => mod.ProjectsSection
+    ),
+  { ssr: true }
+);
+const ContactSection = dynamic(
+  () =>
+    import("@/components/contact/ContactSection").then(
+      (mod) => mod.ContactSection
+    ),
+  { ssr: true }
+);
+const Footer = dynamic(
+  () => import("@/components/footer/Footer").then((mod) => mod.Footer),
+  { ssr: true }
+);
 
 export default async function Home({
   params,
