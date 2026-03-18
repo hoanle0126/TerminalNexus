@@ -1,6 +1,8 @@
 "use client";
 
 import { motion } from "motion/react";
+import { MOTION } from "@/lib/motion";
+import dec from "@/components/effects/decorative.module.css";
 import { useTranslations } from "next-intl";
 import dynamic from "next/dynamic";
 import { CLUSTERS } from "./skillsData";
@@ -14,25 +16,11 @@ export default function SkillsGraph() {
   return (
     <section
       id="skills"
-      className="relative w-full overflow-hidden py-24"
-      style={{ background: "#040d1a" }}
+      className="relative w-full overflow-hidden py-24 bg-surface-deep"
     >
       {/* ── Background decoration ──────────────────────────────────── */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.025]"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(0,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,255,1) 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
-        }}
-      />
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(168,85,247,0.06) 0%, rgba(0,255,255,0.03) 40%, transparent 70%)",
-        }}
-      />
+      <div className={`pointer-events-none absolute inset-0 opacity-[0.025] ${dec.gridCyan}`} />
+      <div className={`pointer-events-none absolute inset-0 ${dec.glowSkills}`} />
 
       {/* ── Content ────────────────────────────────────────────────── */}
       <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
@@ -40,9 +28,8 @@ export default function SkillsGraph() {
         {/* Section heading */}
         <motion.div
           className="mb-14 text-center"
-          initial={{ opacity: 0, y: -16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55 }}
+          initial={MOTION.fadeInDown.hidden}
+          whileInView={MOTION.fadeInDown.visible}
           viewport={{ once: true, margin: "-80px" }}
         >
           <p className="mb-2 font-mono text-sm tracking-widest text-purple-400/60">
@@ -63,9 +50,8 @@ export default function SkillsGraph() {
         {/* Cluster legend */}
         <motion.div
           className="mt-10 flex flex-wrap justify-center gap-4"
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, delay: 0.3 }}
+          initial={MOTION.fadeInUpSmall.hidden}
+          whileInView={MOTION.fadeInUpSmall.visible}
           viewport={{ once: true }}
         >
           {CLUSTERS.map((cluster) => (

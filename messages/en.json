@@ -21,7 +21,12 @@
     "viewProjects": "VIEW PROJECTS",
     "availableBadge": "Available for Work",
     "cta": "View Projects",
-    "contact": "Contact Me"
+    "contact": "Contact Me",
+    "badge1": "● Available for Hire",
+    "badge2": "⚡ React / Next.js",
+    "badge3": "🎌 JLPT N3 日本語",
+    "badge4": "◈ Node.js / TS",
+    "badge5": "◉ 2yr Freelance"
   },
   "terminal": {
     "title": "SYSTEM TERMINAL",
@@ -71,6 +76,7 @@
     "messagePlaceholder": "Tell me about your project...",
     "send": "SEND MESSAGE",
     "sent": "> message_sent.sh ✓",
+    "findMeOn": "Find me on",
     "socialGithub": "GitHub profile",
     "socialLinkedin": "LinkedIn profile",
     "socialDribbble": "Dribbble profile",

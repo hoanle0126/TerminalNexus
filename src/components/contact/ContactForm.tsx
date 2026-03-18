@@ -1,7 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
+import { MOTION } from '@/lib/motion'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
@@ -15,16 +16,14 @@ export function ContactForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('[ContactForm] Mock submission:', formData)
     setSubmitted(true)
   }
 
   if (submitted) {
     return (
       <motion.div
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
+        initial={MOTION.fadeInUpSmall.hidden}
+        animate={MOTION.fadeInUpSmall.visible}
         className="font-mono text-green-400 text-sm bg-black/60 border border-green-400/30 rounded-xl p-8 text-center"
       >
         <span className="block text-2xl mb-2">✓</span>
@@ -83,7 +82,7 @@ export function ContactForm() {
       </div>
 
       {/* Submit */}
-      <motion.div whileTap={{ scale: 0.97 }}>
+      <motion.div {...MOTION.tapShrink}>
         <Button
           type="submit"
           className="cursor-target w-full font-mono font-bold tracking-widest bg-cyan-500 hover:bg-cyan-400 text-black transition-colors duration-200"

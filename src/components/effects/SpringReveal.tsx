@@ -68,8 +68,7 @@ export function SpringReveal({
     if (ref.current && observerRef.current) {
       observerRef.current.unobserve(ref.current);
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (ref as any).current = node;
+    (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
     if (node && observerRef.current) {
       observerRef.current.observe(node);
     }

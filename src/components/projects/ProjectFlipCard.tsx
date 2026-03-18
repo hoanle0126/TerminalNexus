@@ -1,11 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 import Image from 'next/image'
 import { Badge } from '@/components/ui/badge'
 import { useTranslations } from 'next-intl'
 import type { Project } from './projectsData'
+import dec from '@/components/effects/decorative.module.css'
 
 interface Props {
   project: Project
@@ -53,11 +54,7 @@ export function ProjectFlipCard({ project }: Props) {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
           <div
-            className="absolute inset-0 opacity-[0.04] pointer-events-none"
-            style={{
-              backgroundImage:
-                'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(6,182,212,0.3) 2px, rgba(6,182,212,0.3) 4px)',
-            }}
+            className={`absolute inset-0 opacity-[0.04] pointer-events-none ${dec.scanlinesCyanSoft}`}
           />
           <div className="absolute bottom-6 left-6 right-6">
             <h3 className="font-mono text-xl md:text-2xl font-bold text-white drop-shadow-lg">

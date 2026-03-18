@@ -4,9 +4,9 @@ import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { JetBrains_Mono, Inter } from "next/font/google";
-import { Navbar } from "@/components/Navbar";
-import { ScrollProgress } from "@/components/ScrollProgress";
-import { TargetCursorLoader } from "@/components/TargetCursorLoader";
+import { Navbar } from "@/components/shared/Navbar";
+import { ScrollProgress } from "@/components/effects/ScrollProgress";
+import { TargetCursorLoader } from "@/components/effects/TargetCursorLoader";
 import { BackgroundNoise } from "@/components/effects/BackgroundNoise";
 import { ScrollToTop } from "@/components/effects/ScrollToTop";
 

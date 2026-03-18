@@ -1,6 +1,8 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
+import { MOTION } from '@/lib/motion'
+import dec from '@/components/effects/decorative.module.css'
 import { useTranslations } from 'next-intl'
 import { Github, Linkedin, Dribbble, Mail } from 'lucide-react'
 import { ContactForm } from './ContactForm'
@@ -34,18 +36,7 @@ const SOCIAL_LINKS = [
   },
 ]
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.12 },
-  },
-}
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-}
 
 export function ContactSection() {
   const t = useTranslations('contact')
@@ -59,21 +50,16 @@ export function ContactSection() {
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent pointer-events-none" />
       {/* Subtle grid pattern */}
       <div
-        className="absolute inset-0 opacity-[0.03] pointer-events-none"
-        style={{
-          backgroundImage: `linear-gradient(rgba(168,85,247,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(168,85,247,0.5) 1px, transparent 1px)`,
-          backgroundSize: '60px 60px',
-        }}
+        className={`absolute inset-0 opacity-[0.03] pointer-events-none ${dec.gridPurpleSoft}`}
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section heading */}
         <motion.div
           className="text-center mb-16"
-          initial={{ opacity: 0, y: -12 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={MOTION.fadeInDown.hidden}
+          whileInView={MOTION.fadeInDown.visible}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
         >
           <p className="font-mono text-sm text-cyan-400 tracking-widest mb-3">
             {t('label')}
@@ -86,13 +72,13 @@ export function ContactSection() {
         {/* Two-column layout */}
         <motion.div
           className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-start"
-          variants={containerVariants}
+          variants={MOTION.stagger()}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
         >
           {/* Left: Contact info */}
-          <motion.div variants={itemVariants} className="space-y-8">
+          <motion.div variants={MOTION.fadeInUp} className="space-y-8">
             <div className="space-y-4">
               <h3 className="font-mono text-xl md:text-2xl font-bold text-white">
                 {t('subtitle')}
@@ -118,7 +104,7 @@ export function ContactSection() {
             {/* Social links row */}
             <div className="space-y-3">
               <p className="font-mono text-xs text-gray-500 tracking-widest uppercase">
-                Find me on
+                {t('findMeOn')}
               </p>
               <div className="flex items-center gap-3">
                 {SOCIAL_LINKS.map((social) => (
@@ -143,7 +129,7 @@ export function ContactSection() {
 
           {/* Right: Form in glassmorphism card */}
           <motion.div
-            variants={itemVariants}
+            variants={MOTION.fadeInUp}
             className="rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-sm p-6 md:p-8 shadow-lg shadow-black/20"
           >
             <ContactForm />

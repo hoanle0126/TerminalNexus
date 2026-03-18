@@ -1,6 +1,7 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
+import { MOTION } from '@/lib/motion'
 import { useTranslations } from 'next-intl'
 import { Github, Linkedin, Dribbble, Mail, Terminal } from 'lucide-react'
 import { SocialLink } from '@/components/shared/SocialLink'
@@ -48,10 +49,9 @@ export function Footer() {
   return (
     <footer className="relative w-full border-t border-white/10 bg-black/95">
       <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={MOTION.fadeInUpSmall.hidden}
+        whileInView={MOTION.fadeInUpSmall.visible}
         viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
         className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16"
       >
         {/* 3-column grid */}

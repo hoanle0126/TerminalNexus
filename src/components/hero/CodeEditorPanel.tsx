@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useTransform, useSpring } from "motion/react";
+import { MOTION } from "@/lib/motion";
+import dec from "@/components/effects/decorative.module.css";
 
 // ─── Syntax token types ──────────────────────────────────────────────────────
 type TokenKind =
@@ -96,9 +98,9 @@ export default function CodeEditorPanel() {
   return (
     <motion.div
       ref={containerRef}
-      initial={{ opacity: 0, scale: 0.93, y: 24 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      transition={{ duration: 0.7, delay: 0.6, ease: "easeOut" }}
+      initial={MOTION.scaleUp.hidden}
+      animate={MOTION.scaleUp.visible}
+      transition={{ delay: 0.6 }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{
@@ -114,21 +116,12 @@ export default function CodeEditorPanel() {
       aria-label="VSCode-style developer profile"
     >
       {/* ── Background ── */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background: "linear-gradient(135deg, #0d1117 0%, #0a0f1a 60%, #060d14 100%)",
-        }}
-      />
+      <div className={`absolute inset-0 ${dec.editorBg}`} />
 
       {/* ── Scanline overlay ── */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.04] z-10"
-        style={{
-          backgroundImage:
-            "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,255,1) 3px)",
-        }}
+        className={`pointer-events-none absolute inset-0 opacity-[0.04] z-10 ${dec.scanlinesCyan}`}
       />
 
       {/* ── Title bar ── */}
@@ -141,7 +134,7 @@ export default function CodeEditorPanel() {
         </div>
         {/* Tabs */}
         <div className="ml-3 flex items-center gap-1 text-[11px] font-mono">
-          <span className="px-3 py-1 rounded-t bg-[#0d1117] text-cyan-400/80 border-t border-x border-cyan-400/20 -mb-[1px]">
+          <span className="px-3 py-1 rounded-t bg-surface-editor text-cyan-400/80 border-t border-x border-cyan-400/20 -mb-[1px]">
             le-hoan.ts
             <span className="ml-1.5 w-1.5 h-1.5 rounded-full bg-orange-400 inline-block" />
           </span>
@@ -184,9 +177,8 @@ export default function CodeEditorPanel() {
         {TERMINAL_LINES.slice(0, terminalVisible).map((line, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0, x: -8 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.25 }}
+            initial={MOTION.slideInSmallLeft.hidden}
+            animate={MOTION.slideInSmallLeft.visible}
             className={`text-[11px] md:text-xs font-mono leading-relaxed ${line.color}`}
           >
             {line.text}

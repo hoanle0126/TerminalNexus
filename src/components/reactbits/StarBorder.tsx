@@ -20,13 +20,16 @@ const StarBorder = <T extends React.ElementType = 'button'>({
 }: StarBorderProps<T>) => {
   const Component = as || 'button';
 
+  // Extract style from rest for proper merging
+  const { style: restStyle, ...restWithoutStyle } = rest as Record<string, unknown> & { style?: React.CSSProperties };
+
   return (
     <Component
       className={`relative inline-block overflow-hidden rounded-[20px] ${className}`}
-      {...(rest as any)}
+      {...restWithoutStyle}
       style={{
         padding: `${thickness}px 0`,
-        ...(rest as any).style
+        ...restStyle
       }}
     >
       <div

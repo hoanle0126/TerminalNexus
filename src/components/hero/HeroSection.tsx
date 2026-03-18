@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
@@ -9,6 +8,9 @@ import CountUp from "@/components/reactbits/CountUp";
 import BlurText from "@/components/reactbits/BlurText";
 import CodeEditorPanel from "@/components/hero/CodeEditorPanel";
 import FloatingBadges from "@/components/hero/FloatingBadges";
+import { FadeUp } from "@/components/hero/FadeUp";
+import { TypewriterRole } from "@/components/hero/TypewriterRole";
+import { ArrowRight } from "lucide-react";
 
 // FaultyTerminal uses WebGL — load only on client with no SSR
 const FaultyTerminal = dynamic(
@@ -28,86 +30,15 @@ interface HeroTranslations {
 
 interface HeroSectionProps {
   hero: HeroTranslations;
-  // terminal prop kept optional for backward compat but no longer used for rendering
   terminal?: Record<string, string>;
 }
 
 // ─── Constants ─────────────────────────────────────────────────────────────────
-const ROLES = ["Full-Stack Developer", "Cloud Architect", "UI Engineer"];
-
 const STATS = [
   { label: "Years of exp.", value: 3, suffix: "+" },
   { label: "Projects shipped", value: 15, suffix: "+" },
   { label: "Technologies", value: 20, suffix: "+" },
 ];
-
-// ─── Fade-in wrapper ───────────────────────────────────────────────────────────
-function FadeUp({
-  children,
-  delay = 0,
-  className,
-}: {
-  children: React.ReactNode;
-  delay?: number;
-  className?: string;
-}) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
-      animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-      transition={{ duration: 0.6, delay, ease: "easeOut" }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
-// ─── Typewriter role display ───────────────────────────────────────────────────
-function TypewriterRole() {
-  const [roleIndex, setRoleIndex] = useState(0);
-  const [displayed, setDisplayed] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  useEffect(() => {
-    const currentRole = ROLES[roleIndex];
-    const fullLength = currentRole.length;
-
-    if (!isDeleting && displayed.length < fullLength) {
-      // Typing
-      timeoutRef.current = setTimeout(() => {
-        setDisplayed(currentRole.slice(0, displayed.length + 1));
-      }, 70);
-    } else if (!isDeleting && displayed.length === fullLength) {
-      // Pause then start deleting
-      timeoutRef.current = setTimeout(() => setIsDeleting(true), 2000);
-    } else if (isDeleting && displayed.length > 0) {
-      // Deleting
-      timeoutRef.current = setTimeout(() => {
-        setDisplayed(displayed.slice(0, displayed.length - 1));
-      }, 40);
-    } else if (isDeleting && displayed.length === 0) {
-      // Move to next role
-      setIsDeleting(false);
-      setRoleIndex((prev) => (prev + 1) % ROLES.length);
-    }
-
-    return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    };
-  }, [displayed, isDeleting, roleIndex]);
-
-  return (
-    <div className="flex items-center gap-2 font-mono text-xl md:text-2xl text-cyan-400">
-      <span className="text-cyan-600 select-none">&gt;&nbsp;</span>
-      <span>{displayed}</span>
-      <span className="inline-block w-0.5 h-6 bg-cyan-400 animate-blink-cursor" />
-    </div>
-  );
-}
-
-// TerminalWindow removed — replaced by CodeEditorPanel + FloatingBadges
 
 // ─── Main HeroSection ─────────────────────────────────────────────────────────
 export default function HeroSection({ hero }: HeroSectionProps) {
@@ -191,28 +122,14 @@ export default function HeroSection({ hero }: HeroSectionProps) {
             {/* CTA Buttons */}
             <FadeUp delay={0.7}>
               <div className="flex flex-wrap gap-3 pt-1">
-                {/* Primary CTA */}
                 <Link
                   href="#projects"
                   className="cursor-target group relative inline-flex items-center gap-2 px-6 py-3 rounded-lg font-mono text-sm font-bold tracking-widest text-black bg-cyan-400 overflow-hidden transition-all duration-300 hover:bg-cyan-300 hover:shadow-[0_0_24px_rgba(0,255,255,0.5)] active:scale-95"
                 >
                   <span className="relative z-10">{hero.viewProjects}</span>
-                  <svg
-                    className="relative z-10 w-4 h-4 transition-transform duration-200 group-hover:translate-x-1"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2.5}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
-                    />
-                  </svg>
+                  <ArrowRight className="relative z-10 w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" strokeWidth={2.5} />
                 </Link>
 
-                {/* Secondary CTA */}
                 <Link
                   href="#contact"
                   className="cursor-target inline-flex items-center gap-2 px-6 py-3 rounded-lg font-mono text-sm font-bold tracking-widest text-cyan-400 border border-cyan-500/40 bg-cyan-500/5 transition-all duration-300 hover:border-cyan-400/70 hover:bg-cyan-500/10 hover:shadow-[0_0_16px_rgba(0,255,255,0.15)] active:scale-95"
@@ -246,11 +163,11 @@ export default function HeroSection({ hero }: HeroSectionProps) {
             </FadeUp>
           </div>
 
-          {/* ══════════════════ RIGHT COLUMN (CodeEditor + FloatingBadges) ══════════════════ */}
+          {/* ══════════════════ RIGHT COLUMN ══════════════════ */}
           <div className="relative order-1 lg:order-2 flex items-center justify-center
                           h-[360px] md:h-[480px] lg:h-[560px] px-8 md:px-12">
 
-            {/* FaultyTerminal — kept as ambient backdrop at low opacity */}
+            {/* FaultyTerminal — ambient backdrop */}
             <div className="pointer-events-none absolute inset-0 opacity-15 rounded-2xl overflow-hidden">
               <FaultyTerminal
                 className="absolute inset-0 w-full h-full"
@@ -270,7 +187,7 @@ export default function HeroSection({ hero }: HeroSectionProps) {
               />
             </div>
 
-            {/* Code Editor Panel + Floating badges wrapper */}
+            {/* Code Editor Panel + Floating badges */}
             <div className="relative w-full flex items-center justify-center">
               <CodeEditorPanel />
               <FloatingBadges />

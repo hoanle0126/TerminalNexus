@@ -1,12 +1,12 @@
 import dynamic from "next/dynamic";
 import { getTranslations } from "next-intl/server";
-import HeroSection from "@/components/HeroSection";
+import HeroSection from "@/components/hero/HeroSection";
 
 const ExperienceSection = dynamic(
-  () => import("@/components/ExperienceSection"),
+  () => import("@/components/experience/ExperienceSection"),
   { ssr: true }
 );
-const SkillsSection = dynamic(() => import("@/components/SkillsSection"), {
+const SkillsSection = dynamic(() => import("@/components/skills/SkillsSection"), {
   ssr: true,
 });
 const ProjectsSection = dynamic(

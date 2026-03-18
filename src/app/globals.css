@@ -45,6 +45,11 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+  --color-surface-deep: var(--surface-deep);
+  --color-surface-panel: var(--surface-panel);
+  --color-surface-nav: var(--surface-nav);
+  --color-surface-editor: var(--surface-editor);
+  --color-accent-cyan: var(--accent-cyan);
   --animate-blink-cursor: blink-cursor 1.2s step-end infinite;
   --animate-background-position-spin: background-position-spin 3000ms infinite alternate;
   --animate-glitch-after: glitch var(--after-duration, 1.5s) infinite linear alternate-reverse;
@@ -173,6 +178,13 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 8%);
   --sidebar-ring: oklch(0.556 0.02 240);
+
+  /* ── Surface tokens (Rule 12) ── */
+  --surface-deep:   #040d1a;  /* sections: skills, experience */
+  --surface-panel:  #070c14;  /* cards, dropdowns */
+  --surface-nav:    #0a0a0a;  /* navbar glass */
+  --surface-editor: #0d1117;  /* code editor blocks */
+  --accent-cyan:    #22d3ee;  /* shimmer, CTA glow */
 }
 
 @layer base {

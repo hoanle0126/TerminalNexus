@@ -1,35 +1,36 @@
 "use client";
 
 import { motion } from "motion/react";
+import { useTranslations } from "next-intl";
 
-// ─── Badge data ───────────────────────────────────────────────────────────────
-const BADGES = [
+// ─── Badge config (non-text data stays here, text comes from i18n) ────────────
+const BADGE_CONFIG = [
   {
-    text: "● Available for Hire",
+    key: "badge1" as const,
     color: "border-green-400/40 text-green-400",
     glow: "rgba(74,222,128,0.25)",
     pos: "top-[-12px] right-[-12px] md:right-[-20px]",
   },
   {
-    text: "⚡ React / Next.js",
+    key: "badge2" as const,
     color: "border-cyan-400/40 text-cyan-300",
     glow: "rgba(0,255,255,0.2)",
     pos: "top-[28%] right-[-16px] md:right-[-36px]",
   },
   {
-    text: "🎌 JLPT N3 日本語",
+    key: "badge3" as const,
     color: "border-red-400/40 text-red-300",
     glow: "rgba(248,113,113,0.2)",
     pos: "bottom-[28%] right-[-12px] md:right-[-28px]",
   },
   {
-    text: "◈ Node.js / TS",
+    key: "badge4" as const,
     color: "border-cyan-400/40 text-cyan-300",
     glow: "rgba(0,255,255,0.2)",
     pos: "bottom-[-12px] right-[-8px] md:right-[-16px]",
   },
   {
-    text: "◉ 2yr Freelance",
+    key: "badge5" as const,
     color: "border-blue-400/40 text-blue-300",
     glow: "rgba(96,165,250,0.2)",
     pos: "top-[12%] left-[-16px] md:left-[-44px]",
@@ -38,11 +39,13 @@ const BADGES = [
 
 // ─── Component ───────────────────────────────────────────────────────────────
 export default function FloatingBadges() {
+  const t = useTranslations("hero");
+
   return (
     <>
-      {BADGES.map((badge, i) => (
+      {BADGE_CONFIG.map((badge, i) => (
         <motion.div
-          key={i}
+          key={badge.key}
           className={`absolute z-20 px-2.5 py-1.5 rounded-sm text-[10px] md:text-xs font-mono
                       backdrop-blur-md bg-white/5
                       border ${badge.color}
@@ -65,9 +68,10 @@ export default function FloatingBadges() {
             },
           }}
         >
-          {badge.text}
+          {t(badge.key)}
         </motion.div>
       ))}
     </>
   );
 }
+

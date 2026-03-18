@@ -56,7 +56,7 @@ export function LanguageSwitcher() {
 
       <DropdownMenuContent
         align="end"
-        className="bg-[#080c14] border border-cyan-400/30 rounded-sm min-w-[150px] p-1"
+        className="bg-surface-panel border border-cyan-400/30 rounded-sm min-w-[150px] p-1"
       >
         {LANGUAGES.map((lang) => (
           <DropdownMenuItem
