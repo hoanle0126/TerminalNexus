@@ -420,7 +420,7 @@ export default function ExperienceCarousel({ title, subtitle }: ExperienceCarous
         id="experience"
         className="relative hidden md:block h-screen"
       >
-        <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden bg-[#040d1a]">
+        <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden bg-[#040d1a] pt-20">
 
           {/* Decorative grid */}
           <div
@@ -444,7 +444,7 @@ export default function ExperienceCarousel({ title, subtitle }: ExperienceCarous
           <div className="relative z-10 w-full max-w-6xl mx-auto px-6 flex flex-col items-center">
 
             {/* Section heading */}
-            <div className="text-center mb-10">
+            <div className="text-center mb-4">
               <p className="font-mono text-sm tracking-widest text-cyan-400/60 mb-2">
                 {"// 02. EXPERIENCE"}
               </p>
