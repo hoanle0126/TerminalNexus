@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useRef, useState, useEffect, useCallback } from "react";
+import React, { useRef } from "react";
 import {
   useTransform,
   useSpring,
-  useMotionValue,
+  useScroll,
   motion,
 } from "motion/react";
 
@@ -35,15 +35,13 @@ interface ExperienceCarouselProps {
 
 // ─── Constants ─────────────────────────────────────────────────────────────────
 
-const CARD_W   = 400;   // card width px
-const CARD_H   = 500;   // card height px
+const CARD_W   = 400;
+const CARD_H   = 500;
 
-// ── Diagonal spread constants — tweak these 4 to adjust the look ──────────────
-// Gap between adjacent cards = SPREAD_X - CARD_W  (keep > 80px to avoid overlap)
-const SPREAD_X = 620;   // px — horizontal separation per rel unit  (620 - 400 = 220px gap)
-const SPREAD_Y = -90;   // px — vertical offset per rel unit (negative = right card is higher)
-const TILT_Z   = -8;    // deg — Z-axis tilt (negative → left card tilts \, right card tilts /)
-const DEPTH_Y  = 20;    // deg — Y-axis rotation for 3-D depth
+const SPREAD_X = 620;
+const SPREAD_Y = -90;
+const TILT_Z   = -8;
+const DEPTH_Y  = 20;
 
 // ─── Data ──────────────────────────────────────────────────────────────────────
 
@@ -132,12 +130,11 @@ const ACCENT_STYLES: Record<
   },
 };
 
-// ─── DiagonalCard — scroll-driven diagonal spread card ────────────────────────
+// ─── ScrollCard ────────────────────────────────────────────────────────────────
 
 interface ScrollCardProps {
   item: ExperienceItem;
   cardIndex: number;
-  /** spring-smoothed fractional active index (0 = first card, N-1 = last) */
   springIndex: ReturnType<typeof useSpring>;
   totalCards: number;
 }
@@ -145,7 +142,6 @@ interface ScrollCardProps {
 function ScrollCard({ item, cardIndex, springIndex }: ScrollCardProps) {
   const accent = ACCENT_STYLES[item.accentColor];
 
-  // rel = signed distance from this card to the spring-animated active index
   const x       = useTransform(springIndex, (v) => (cardIndex - v) * SPREAD_X);
   const y       = useTransform(springIndex, (v) => (cardIndex - v) * SPREAD_Y);
   const rotateZ = useTransform(springIndex, (v) => (cardIndex - v) * TILT_Z);
@@ -170,7 +166,6 @@ function ScrollCard({ item, cardIndex, springIndex }: ScrollCardProps) {
         willChange: "transform, opacity",
       }}
     >
-      {/* Card face */}
       <div
         className={`
           cursor-target
@@ -179,15 +174,12 @@ function ScrollCard({ item, cardIndex, springIndex }: ScrollCardProps) {
           bg-[#070c14]
         `}
       >
-        {/* Inset glow overlay */}
         <div className="absolute inset-0 rounded-2xl pointer-events-none shadow-[inset_0_0_30px_rgba(0,255,255,0.03)]" />
 
-        {/* Chapter watermark */}
         <span className="absolute top-3 right-4 text-[80px] leading-none font-bold text-white/[0.04] font-mono select-none pointer-events-none">
           {item.chapter}
         </span>
 
-        {/* Chapter label + source */}
         <div className="mb-3 flex items-center gap-2 relative z-10">
           <span className={`font-mono text-[10px] tracking-widest uppercase ${accent.badgeText} opacity-70`}>
             Chapter {item.chapter}
@@ -198,12 +190,10 @@ function ScrollCard({ item, cardIndex, springIndex }: ScrollCardProps) {
           </span>
         </div>
 
-        {/* Period */}
         <p className={`font-mono text-[11px] uppercase tracking-[0.2em] ${accent.badgeText} opacity-70 mb-1 relative z-10`}>
           {item.period}
         </p>
 
-        {/* Title */}
         <h3 className="text-lg font-bold text-white mb-0.5 relative z-10">{item.role}</h3>
         <p className="text-slate-400 text-sm mb-1 relative z-10">{item.company}</p>
         <p className="font-mono text-xs text-slate-500 mb-4 relative z-10">
@@ -211,12 +201,10 @@ function ScrollCard({ item, cardIndex, springIndex }: ScrollCardProps) {
           {item.location}
         </p>
 
-        {/* Description */}
         <p className="text-slate-400 text-sm leading-relaxed mb-4 relative z-10">
           {item.description}
         </p>
 
-        {/* Highlight */}
         <div className={`mb-4 rounded-lg border px-3 py-2 ${accent.highlightBox} relative z-10`}>
           <p className={`font-mono text-xs ${accent.highlightText}`}>
             <span className="mr-2 opacity-60">&gt;</span>
@@ -224,7 +212,6 @@ function ScrollCard({ item, cardIndex, springIndex }: ScrollCardProps) {
           </p>
         </div>
 
-        {/* Stack */}
         <div className="flex flex-wrap gap-1.5 relative z-10">
           {item.stack.map((tech) => (
             <span
@@ -269,7 +256,7 @@ function ProgressDots({
 // ─── Scroll Hint ───────────────────────────────────────────────────────────────
 
 function ScrollHint({ springIndex }: { springIndex: ReturnType<typeof useSpring> }) {
-  const opacity = useTransform(springIndex, [0, 0.3], [1, 0]);
+  const opacity = useTransform(springIndex, [0, 0.4], [1, 0]);
   return (
     <motion.div
       style={{ opacity }}
@@ -335,92 +322,32 @@ function MobileTimeline({ items }: { items: ExperienceItem[] }) {
 
 // ─── Main Export ───────────────────────────────────────────────────────────────
 
-// ─── Snap threshold: minimum wheel delta to trigger a card advance ─────────────
-const WHEEL_THRESHOLD = 30; // px
-
 export default function ExperienceCarousel({ title, subtitle }: ExperienceCarouselProps) {
   const N = EXPERIENCE_DATA.length;
-  const sectionRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  // ── Discrete active index ─────────────────────────────────────────────────
-  const [activeIndex, setActiveIndex] = useState(0);
+  // ── Scroll-driven: track scroll progress within the tall container ──────────
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
 
-  // ── Spring-smoothed fractional index drives all card transforms ───────────
-  const rawIndex = useMotionValue(0);
-  const springIndex = useSpring(rawIndex, { stiffness: 280, damping: 32, mass: 0.8 });
-
-  // Keep rawIndex in sync with activeIndex
-  useEffect(() => { rawIndex.set(activeIndex); }, [activeIndex, rawIndex]);
-
-  // ── Intersection observer: track whether section is in viewport ───────────
-  const isInView = useRef(false);
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => { isInView.current = entry.isIntersecting; },
-      { threshold: 0.5 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-
-  // ── Wheel handler ─────────────────────────────────────────────────────────
-  const cooldownRef = useRef(false);
-
-  const onWheel = useCallback(
-    (e: WheelEvent) => {
-      if (!isInView.current) return;
-      const delta = e.deltaY;
-
-      // Scrolling DOWN
-      if (delta > WHEEL_THRESHOLD) {
-        if (activeIndex < N - 1) {
-          e.preventDefault();
-          if (!cooldownRef.current) {
-            cooldownRef.current = true;
-            setActiveIndex((i) => Math.min(i + 1, N - 1));
-            setTimeout(() => { cooldownRef.current = false; }, 700);
-          }
-        }
-        // At last card → let page scroll naturally (no preventDefault)
-        return;
-      }
-
-      // Scrolling UP
-      if (delta < -WHEEL_THRESHOLD) {
-        if (activeIndex > 0) {
-          e.preventDefault();
-          if (!cooldownRef.current) {
-            cooldownRef.current = true;
-            setActiveIndex((i) => Math.max(i - 1, 0));
-            setTimeout(() => { cooldownRef.current = false; }, 700);
-          }
-        }
-        // At first card → let page scroll up naturally
-        return;
-      }
-    },
-    [activeIndex, N]
-  );
-
-  // Attach wheel listener to the section (non-passive so we can preventDefault)
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    el.addEventListener("wheel", onWheel, { passive: false });
-    return () => el.removeEventListener("wheel", onWheel);
-  }, [onWheel]);
+  // Map [0, 1] → [0, N-1] with spring smoothing
+  const rawIndex   = useTransform(scrollYProgress, [0, 1], [0, N - 1]);
+  const springIndex = useSpring(rawIndex, { stiffness: 180, damping: 28, mass: 0.6 });
 
   return (
     <>
-      {/* ── DESKTOP: Wheel-snap carousel ─────────────────────────────────────── */}
+      {/* ── DESKTOP: Scroll-sticky carousel ──────────────────────────────────── */}
       <div
-        ref={sectionRef}
+        ref={containerRef}
         id="experience"
-        className="relative hidden md:block h-screen"
+        // Each card gets one full viewport of scroll travel
+        style={{ height: `${N * 100}vh` }}
+        className="relative hidden md:block"
       >
-        <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden bg-[#040d1a] pt-20">
+        {/* Sticky viewport that stays fixed while scrolling through the container */}
+        <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden bg-[#040d1a]">
 
           {/* Decorative grid */}
           <div
@@ -441,7 +368,7 @@ export default function ExperienceCarousel({ title, subtitle }: ExperienceCarous
             }}
           />
 
-          <div className="relative z-10 w-full max-w-6xl mx-auto px-6 flex flex-col items-center">
+          <div className="relative z-10 w-full max-w-6xl mx-auto px-6 flex flex-col items-center pt-20">
 
             {/* Section heading */}
             <div className="text-center mb-4">
@@ -487,7 +414,7 @@ export default function ExperienceCarousel({ title, subtitle }: ExperienceCarous
         </div>
       </div>
 
-      {/* ── MOBILE: Vertical Timeline ────────────────────────────────────────── */}
+      {/* ── MOBILE: Vertical Timeline ─────────────────────────────────────────── */}
       <section
         id="experience-mobile"
         className="relative md:hidden w-full overflow-hidden bg-[#040d1a] py-24"
