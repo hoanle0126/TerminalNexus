@@ -1,3 +1,16 @@
+// ─── Skills Configuration ────────────────────────────────────────────────────
+// Skill clusters displayed in the interactive network graph.
+// Template buyers: edit clusters and skills to match your expertise.
+//
+// Tips:
+//   • Each cluster = a group of related skills (Frontend, Backend, etc.)
+//   • `color` sets the connection line color in the graph
+//   • `iconKey` uses react-icons/si keys — find them at:
+//     https://react-icons.github.io/react-icons/icons/si/
+//   • For skills without an icon, use `abbr` (2-char fallback text)
+//   • `description` appears as tooltip on hover
+// ─────────────────────────────────────────────────────────────────────────────
+
 export interface Skill {
   slug: string
   label: string

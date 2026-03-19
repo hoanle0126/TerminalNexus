@@ -1,3 +1,14 @@
+// ─── Projects Configuration ──────────────────────────────────────────────────
+// Your portfolio project entries. Displayed as a bento grid with flip cards.
+// Template buyers: replace these with your own projects.
+//
+// Tips:
+//   • Place thumbnail images in `public/projects/` (recommended: 800×600px)
+//   • `size: "large"` spans 2 columns, `"small"` spans 1 column
+//   • `demoUrl` is optional — omit it if no live demo exists
+//   • `techStack` items appear as badges on the card
+// ─────────────────────────────────────────────────────────────────────────────
+
 export interface Project {
   id: string
   title: string

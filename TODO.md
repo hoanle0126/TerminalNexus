@@ -32,16 +32,16 @@ Cho phép người mua dễ dàng đổi giao diện.
 
 ---
 
-## Phase 3: Documentation
+## Phase 3: Documentation ✅ HOÀN THÀNH
 
 README và hướng dẫn cho người mua.
 
-- [ ] Viết lại `README.md` — setup guide, feature list, screenshots, tech stack
-- [ ] Tạo `docs/CUSTOMIZATION.md` — hướng dẫn sửa config, đổi theme, thêm sections
-- [ ] Tạo `docs/DEPLOYMENT.md` — deploy lên Vercel/Netlify/Docker
-- [ ] Tạo `docs/STRUCTURE.md` — giải thích cấu trúc folder và component
-- [ ] Thêm inline comments cho các file config (giải thích từng field)
-- [ ] Tạo `.env.example` nếu cần API keys
+- [x] Viết lại `README.md` — setup guide, feature list, screenshots, tech stack
+- [x] Tạo `docs/CUSTOMIZATION.md` — hướng dẫn sửa config, đổi theme, thêm sections
+- [x] Tạo `docs/DEPLOYMENT.md` — deploy lên Vercel/Netlify/Docker
+- [x] Tạo `docs/STRUCTURE.md` — giải thích cấu trúc folder và component
+- [x] Thêm inline comments cho các file config (giải thích từng field)
+- [x] Tạo `.env.example` nếu cần API keys
 
 ---
 
