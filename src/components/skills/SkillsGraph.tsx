@@ -6,6 +6,7 @@ import dec from "@/components/effects/decorative.module.css";
 import { useTranslations } from "next-intl";
 import dynamic from "next/dynamic";
 import { CLUSTERS } from "./skillsData";
+import { MobileSkillsGrid } from "./MobileSkillsGrid";
 
 // Defer heavy canvas/svg work to avoid SSR issues
 const NetworkGraph = dynamic(() => import("./NetworkGraph"), { ssr: false });
@@ -44,8 +45,15 @@ export default function SkillsGraph() {
           <div className="mx-auto mt-5 h-px w-24 bg-gradient-to-r from-transparent via-purple-500 to-transparent" />
         </motion.div>
 
-        {/* Network graph */}
-        <NetworkGraph />
+        {/* Mobile / tablet layout (< lg) */}
+        <div className="lg:hidden">
+          <MobileSkillsGrid />
+        </div>
+
+        {/* Desktop layout (≥ lg): interactive network graph */}
+        <div className="hidden lg:block">
+          <NetworkGraph />
+        </div>
 
         {/* Cluster legend */}
         <motion.div
