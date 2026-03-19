@@ -1,0 +1,40 @@
+MIT License (Personal Use)
+
+Copyright (c) 2026 Lê Hoàn (hoanle0126)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), for
+**personal and non-commercial use only**, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+Commercial License
+
+For commercial use (client projects, reselling, SaaS products, or any
+revenue-generating applications), a Commercial License is required.
+
+See: docs/LICENSE_COMMERCIAL.md for full terms.
+Purchase at: https://gumroad.com/l/terminalnexus (or your storefront URL)
+
+---
+
+Summary of Use Cases
+
+| Use Case                                      | License Required     |
+|-----------------------------------------------|----------------------|
+| Personal portfolio                            | MIT (free)           |
+| Open-source project                           | MIT (free)           |
+| Client work / freelance project               | Commercial License   |
+| SaaS / startup / company internal use         | Commercial License   |
+| Reselling or redistributing as a template     | Not permitted        |

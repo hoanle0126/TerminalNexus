@@ -205,4 +205,11 @@ CMD ["node", "server.js"]
 
 ## License
 
-MIT © [Lê Hoàn](https://github.com/hoanle0126)
+TerminalNexus uses a **Dual License** model:
+
+| Use Case | License |
+| -------- | ------- |
+| Personal portfolio / open-source project | ✅ [MIT](LICENSE) — Free |
+| Client work / commercial / company use | 💳 [Commercial License](docs/LICENSE_COMMERCIAL.md) — $29 |
+
+> 📖 See **[docs/LICENSE_COMMERCIAL.md](docs/LICENSE_COMMERCIAL.md)** for full commercial terms and pricing tiers.

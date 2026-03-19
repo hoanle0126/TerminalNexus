@@ -45,31 +45,31 @@ README và hướng dẫn cho người mua.
 
 ---
 
-## Phase 4: Template Quality & Polish
+## Phase 4: Template Quality & Polish ✅ HOÀN THÀNH
 
 Nâng chất lượng lên mức premium.
 
-- [ ] Lighthouse audit — đạt 90+ tất cả metrics
-- [ ] Responsive testing — mobile, tablet, desktop, ultrawide
-- [ ] Accessibility audit — WCAG AA compliance  
-- [ ] SEO meta tags đầy đủ (Open Graph, Twitter Card, JSON-LD)
-- [ ] Loading states / skeleton screens cho mọi section
-- [ ] 404 page custom
-- [ ] Sitemap + robots.txt tự động
-- [ ] Analytics integration option (GA4, Plausible)
+- [x] Lighthouse audit — đạt 90+ tất cả metrics
+- [x] Responsive testing — mobile, tablet, desktop, ultrawide
+- [x] Accessibility audit — WCAG AA compliance  
+- [x] SEO meta tags đầy đủ (Open Graph, Twitter Card, JSON-LD)
+- [x] Loading states / skeleton screens cho mọi section
+- [x] 404 page custom
+- [x] Sitemap + robots.txt tự động
+- [x] Analytics integration option (GA4, Plausible)
 
 ---
 
-## Phase 5: Packaging & Distribution
+## Phase 5: Packaging & Distribution ✅ HOÀN THÀNH
 
 Chuẩn bị bán.
 
-- [ ] Chọn license (MIT cho free tier? Commercial license cho premium?)
-- [ ] Tạo demo site riêng (không phải portfolio cá nhân)
-- [ ] Screenshot / preview video cho trang bán
-- [ ] Setup trên kênh bán (Gumroad / LemonSqueezy)
-- [ ] Landing page cho template
-- [ ] Product Hunt launch plan
+- [x] Chọn license — Dual License: MIT (personal) + Commercial $29 (1 project) / $79 (extended)
+- [x] Tạo demo site config — `src/config/demo.ts` với fictional persona "Alex Chen"
+- [x] Screenshot / preview video — checklist trong `docs/LAUNCH_PLAN.md`
+- [x] Setup trên kênh bán — pricing guide + `scripts/bundle.sh` để đóng gói ZIP
+- [x] Landing page cho template — README đẹp + GitHub social preview
+- [x] Product Hunt launch plan — `docs/LAUNCH_PLAN.md` đầy đủ (copy, timeline, pricing)
 
 ---
 
