@@ -3,6 +3,7 @@
 import { motion } from "motion/react";
 import type { Cluster } from "./skillsData";
 import { CLUSTER_POSITIONS, useFloatOffset } from "./networkGraphTypes";
+import { MOTION } from "@/lib/motion";
 
 // ─── Types ──────────────────────────────────────────────────────────────────────
 
@@ -24,13 +25,10 @@ export function ClusterNode({ cluster, index, isHovered, onEnter, onLeave }: Clu
     <motion.div
       className="absolute"
       style={{ left: `${pos.x}%`, top: `${pos.y}%`, zIndex: 15 }}
-      initial={{ opacity: 0, scale: 0.4 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.5, delay: 0.1 + index * 0.08 }}
+      {...MOTION.clusterNodeEnter(index)}
     >
       <motion.div
-        animate={{ y: yOffset }}
-        transition={{ duration, repeat: Infinity, ease: "easeInOut" }}
+        {...MOTION.clusterNodeFloat(yOffset, duration)}
         className="-translate-x-1/2 -translate-y-1/2"
       >
         <motion.button

@@ -3,7 +3,7 @@
 > Mọi code trong project **PHẢI** tuân thủ 100% các quy tắc dưới đây.
 > Vi phạm bất kỳ rule nào = reject. Không ngoại lệ.
 >
-> **Project:** Developer Portfolio — Lê Hoàn
+> **Project:** Developer Portfolio — Lê Văn Xuân Hoàn
 > **Stack:** Next.js 16 · React 19 · Tailwind CSS v4 · next-intl · Framer Motion · Three.js
 > **Theme:** Dark Cyberpunk / Terminal / Hacker aesthetic
 > **Locales:** `en`, `vi`

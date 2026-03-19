@@ -3,8 +3,10 @@
 import { motion } from "motion/react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import { MOTION } from "@/lib/motion";
+import { ScrollIndicator } from "@/components/hero/ScrollIndicator";
+import { HeroStats } from "@/components/hero/HeroStats";
 import GlitchText from "@/components/reactbits/GlitchText";
-import CountUp from "@/components/reactbits/CountUp";
 import BlurText from "@/components/reactbits/BlurText";
 import FloatingBadges from "@/components/hero/FloatingBadges";
 import { FadeUp } from "@/components/hero/FadeUp";
@@ -43,8 +45,6 @@ interface HeroSectionProps {
   terminal?: Record<string, string>;
 }
 
-// ─── Constants ─────────────────────────────────────────────────────────────────
-import { HERO_STATS as STATS } from "@/config/hero";
 
 // ─── Main HeroSection ─────────────────────────────────────────────────────────
 export default function HeroSection({ hero }: HeroSectionProps) {
@@ -147,25 +147,7 @@ export default function HeroSection({ hero }: HeroSectionProps) {
 
             {/* Stats row */}
             <FadeUp delay={0.85}>
-              <div className="flex flex-wrap gap-6 pt-4 border-t border-white/5">
-                {STATS.map((stat, i) => (
-                  <div key={i} className="flex flex-col gap-0.5">
-                    <div className="text-2xl md:text-3xl font-black font-mono text-white">
-                      <CountUp
-                        to={stat.value}
-                        from={0}
-                        duration={1.8}
-                        delay={1}
-                        className="tabular-nums"
-                      />
-                      <span className="text-accent-primary">{stat.suffix}</span>
-                    </div>
-                    <span className="text-xs text-zinc-500 font-mono tracking-wider uppercase">
-                      {stat.label}
-                    </span>
-                  </div>
-                ))}
-              </div>
+              <HeroStats />
             </FadeUp>
           </div>
 
@@ -202,22 +184,7 @@ export default function HeroSection({ hero }: HeroSectionProps) {
         </div>
       </div>
 
-      {/* ── Scroll indicator ── */}
-      <motion.div
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 text-zinc-600"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 0.8 }}
-      >
-        <span className="text-[10px] font-mono tracking-widest uppercase">
-          SCROLL
-        </span>
-        <motion.div
-          className="w-0.5 h-8 bg-gradient-to-b from-accent-primary/60 to-transparent rounded-full"
-          animate={{ scaleY: [1, 0.5, 1], opacity: [0.6, 1, 0.6] }}
-          transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-        />
-      </motion.div>
+      <ScrollIndicator />
     </section>
   );
 }

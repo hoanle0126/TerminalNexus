@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { Badge } from '@/components/ui/badge'
 import { useTranslations } from 'next-intl'
 import type { Project } from './projectsData'
+import { MOTION } from '@/lib/motion'
 import dec from '@/components/effects/decorative.module.css'
 
 interface Props {
@@ -29,8 +30,7 @@ export function ProjectFlipCard({ project }: Props) {
       onClick={() => setIsFlipped((prev) => !prev)}
     >
       <motion.div
-        animate={{ rotateY: isFlipped ? 180 : 0 }}
-        transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] as [number, number, number, number] }}
+        {...MOTION.flipCard(isFlipped)}
         whileHover={{ scale: 1.02 }}
         className="relative w-full h-full"
         style={{ transformStyle: 'preserve-3d' }}

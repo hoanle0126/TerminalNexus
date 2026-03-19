@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "Lê Hoàn | Full-Stack Developer",
-    "description": "Portfolio cá nhân của Lê Hoàn — Full-Stack Developer chuyên về React, Next.js, và Cloud Architecture."
+    "title": "Lê Văn Xuân Hoàn | Full-Stack Developer",
+    "description": "Portfolio cá nhân của Lê Văn Xuân Hoàn — Full-Stack Developer chuyên về React, Next.js, và Cloud Architecture."
   },
   "nav": {
     "home": "Trang chủ",
@@ -14,7 +14,7 @@
   },
   "hero": {
     "greeting": "Xin chào, tôi là",
-    "name": "Lê Hoàn",
+    "name": "Lê Văn Xuân Hoàn",
     "role": "Full-Stack Developer",
     "tagline": "> Full-Stack Developer — Cloud Architect — UI Engineer",
     "description": "Xây dựng trải nghiệm web hiện đại với đam mê và sáng tạo. Chuyên về React, Next.js, và Cloud Architecture.",
@@ -91,7 +91,7 @@
     "quickLinks": "Điều Hướng",
     "connect": "Kết Nối",
     "quote": "Có thể chúng ta sẽ không gặp lại nhau. Hãy theo dõi để không bỏ lỡ",
-    "copyright": "© 2025 Lê Hoàn. Bảo lưu mọi quyền.",
+    "copyright": "© 2025 Lê Văn Xuân Hoàn. Bảo lưu mọi quyền.",
     "nav": {
       "home": "01. Trang chủ",
       "about": "02. Giới thiệu",
@@ -106,5 +106,14 @@
     "line3": "Khởi tạo giao diện......... OK",
     "line4": "LÊ HOÀN // LẬP TRÌNH VIÊN",
     "line5": "TRẠNG THÁI: ONLINE"
+  },
+  "notFound": {
+    "errorCode": "404",
+    "headline": "TÍN_HIỆU_MẤT",
+    "terminal": "$ tìm_kiếm trang --đường_dẫn /route/này",
+    "terminalResult": "LỖI: Không tìm thấy route phù hợp.",
+    "message": "Trang bạn đang tìm có thể đã offline hoặc chưa từng tồn tại.",
+    "returnBtn": "QUAY VỀ MÀN HÌNH CHÍNH",
+    "ariaReturn": "Quay về trang chủ"
   }
 }

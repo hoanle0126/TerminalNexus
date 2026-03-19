@@ -26,7 +26,7 @@ export default function HeroProfileCard() {
     <motion.div
       initial={MOTION.scaleUp.hidden}
       animate={MOTION.scaleUp.visible}
-      transition={{ delay: 0.6 }}
+      transition={{ ...MOTION.scaleUp.visible.transition, delay: 0.6 }}
       className="relative w-full max-w-[420px]"
     >
       <PixelTransition
@@ -59,9 +59,7 @@ export default function HeroProfileCard() {
 
       {/* Hint text */}
       <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 0.6 }}
+        {...MOTION.fadeInDelayed(1.5)}
         className="mt-3 text-center text-[10px] font-mono text-accent-primary/40
                    tracking-widest uppercase animate-pulse"
       >

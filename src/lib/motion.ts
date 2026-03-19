@@ -114,4 +114,94 @@ export const MOTION = {
       transition: { staggerChildren: staggerMs },
     },
   }),
+
+  /* ── Hero-specific tokens ───────────────────────────────────────────────── */
+
+  /**
+   * Scroll indicator fade-in then loop — bottom scroll hint element.
+   * Usage: initial/animate via .initial/.animate keys separately.
+   */
+  scrollIndicator: {
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+    transition: { delay: 2, duration: 0.8 },
+  },
+
+  /** Scroll bar pulse loop — the vertical bar in scroll indicator */
+  scrollBarPulse: {
+    animate: { scaleY: [1, 0.5, 1] as number[], opacity: [0.6, 1, 0.6] as number[] },
+    transition: { duration: 1.6, repeat: Infinity, ease: "easeInOut" as const },
+  },
+
+  /** Simple fade-in with configurable delay — hero card, badges */
+  fadeInDelayed: (delay: number, duration = 0.6) => ({
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+    transition: { delay, duration },
+  }),
+
+  /** Floating badge enter — scale + fade */
+  floatingBadge: {
+    initial: { opacity: 0, scale: 0.8 },
+    animate: { opacity: 1, scale: 1 },
+  },
+
+  /** Floating continuous animation config for badges */
+  floatingBadgeTransition: (delay: number, duration: number) => ({
+    delay,
+    duration,
+    repeat: Infinity,
+    repeatType: "reverse" as const,
+    ease: "easeInOut" as const,
+  }),
+
+  /* ── Skills / graph tokens ──────────────────────────────────────────────── */
+
+  /** Cluster node entrance — scale from 0.4 */
+  clusterNodeEnter: (index: number) => ({
+    initial: { opacity: 0, scale: 0.4 },
+    animate: { opacity: 1, scale: 1 },
+    transition: { duration: 0.5, delay: 0.1 + index * 0.08 },
+  }),
+
+  /** Cluster node loop float */
+  clusterNodeFloat: (yOffset: number | number[], duration: number) => ({
+    animate: { y: yOffset },
+    transition: { duration, repeat: Infinity, ease: "easeInOut" as const },
+  }),
+
+  /** Skill icon hover */
+  skillIconHover: {
+    animate: { scale: 1.1, filter: "drop-shadow(0 0 8px currentColor)" },
+    transition: { duration: 0.2 },
+  },
+
+  /* ── Project / card tokens ──────────────────────────────────────────────── */
+
+  /** Flip card rotation */
+  flipCard: (isFlipped: boolean) => ({
+    animate: { rotateY: isFlipped ? 180 : 0 },
+    transition: { duration: 0.6, ease: [0.4, 0, 0.2, 1] as [number, number, number, number] },
+  }),
+
+  /* ── Nav tokens ─────────────────────────────────────────────────────────── */
+
+  /** Underline slide-in from left (NavItem active indicator) */
+  navUnderline: {
+    initial: { x: "-100%" },
+    animate: { x: "0%" },
+    transition: { duration: 0.38, ease: "linear" as const },
+  },
+
+  /** Nav item stagger entrance */
+  navItemEnter: (index: number) => ({
+    transition: { delay: index * 0.045, duration: 0.18, ease: "easeOut" as const },
+  }),
+
+  /* ── Experience / timeline tokens ──────────────────────────────────────── */
+
+  /** Mobile timeline item slide-in with stagger delay */
+  timelineItem: (index: number) => ({
+    transition: { delay: index * 0.12, duration: 0.5 },
+  }),
 } as const;

@@ -11,6 +11,7 @@ import { BackgroundNoise } from "@/components/effects/BackgroundNoise";
 import { ScrollToTop } from "@/components/effects/ScrollToTop";
 import ThemeProvider from "@/components/effects/ThemeProvider";
 import BootLoader from "@/components/effects/BootLoader";
+import AnalyticsProvider from "@/components/effects/AnalyticsProvider";
 import { siteConfig } from "@/config/site";
 
 // ─── Fonts ────────────────────────────────────────────────────────────────────
@@ -88,6 +89,37 @@ export async function generateMetadata({
   };
 }
 
+// ─── JSON-LD Structured Data ──────────────────────────────────────────────────
+function buildJsonLd(locale: string) {
+  const baseUrl = siteConfig.domain;
+  const canonicalUrl = `${baseUrl}/${locale}`;
+
+  const person = {
+    "@type": "Person",
+    name: siteConfig.name,
+    url: canonicalUrl,
+    jobTitle: siteConfig.jobTitle,
+    ...(siteConfig.worksFor
+      ? { worksFor: { "@type": "Organization", name: siteConfig.worksFor } }
+      : {}),
+    sameAs: siteConfig.socials
+      .filter((s) => s.href.startsWith("http"))
+      .map((s) => s.href),
+  };
+
+  const website = {
+    "@type": "WebSite",
+    name: siteConfig.ogSiteName,
+    url: baseUrl,
+    description: "",
+  };
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [person, website],
+  };
+}
+
 // ─── Layout ───────────────────────────────────────────────────────────────────
 export default async function LocaleLayout({
   children,
@@ -104,8 +136,17 @@ export default async function LocaleLayout({
 
   const messages = (await import(`../../../messages/${locale}.json`)).default;
 
+  const jsonLd = buildJsonLd(locale);
+
   return (
     <html lang={locale} className="dark scroll-smooth" suppressHydrationWarning>
+      <head>
+        {/* JSON-LD structured data — Person + WebSite schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body
         className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased text-white min-h-screen`}
       >
@@ -127,6 +168,8 @@ export default async function LocaleLayout({
           </main>
           {/* Floating scroll-to-top button with progress ring */}
           <ScrollToTop />
+          {/* Analytics — GA4 / Plausible (opt-in via siteConfig.analytics) */}
+          <AnalyticsProvider />
         </NextIntlClientProvider>
       </body>
     </html>

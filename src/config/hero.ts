@@ -19,6 +19,14 @@ export const HERO_STATS: HeroStat[] = [
   { label: "Technologies", value: 20, suffix: "+" },
 ];
 
+// ── Typewriter roles (shown in hero typewriter animation) ──────────────────
+// Template buyers: replace with your own roles/titles.
+export const HERO_ROLES: string[] = [
+  "Full-Stack Developer",
+  "Cloud Architect",
+  "UI Engineer",
+];
+
 // ── Code Editor Tokens ──────────────────────────────────────────────────────
 
 type TokenKind =

@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
+import { MOTION } from "@/lib/motion";
 
 // ─── Badge config (non-text data stays here, text comes from i18n) ────────────
 const BADGE_CONFIG = [
@@ -51,22 +52,13 @@ export default function FloatingBadges() {
                       border ${badge.color}
                       whitespace-nowrap ${badge.pos}`}
           style={{ boxShadow: `0 0 14px ${badge.glow}` }}
-          initial={{ opacity: 0, scale: 0.8 }}
+          {...MOTION.floatingBadge}
           animate={{
             opacity: 1,
             scale: 1,
             y: [0, -8, 0],
           }}
-          transition={{
-            opacity: { duration: 0.5, delay: 1 + i * 0.15 },
-            scale:   { duration: 0.5, delay: 1 + i * 0.15 },
-            y: {
-              duration: 3 + i * 0.7,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: i * 0.4,
-            },
-          }}
+          transition={MOTION.floatingBadgeTransition(1 + i * 0.15, 3 + i * 0.7)}
         >
           {t(badge.key)}
         </motion.div>

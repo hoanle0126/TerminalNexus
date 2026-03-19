@@ -18,10 +18,23 @@ export interface SocialLink {
   iconUrl?: string;
 }
 
+export interface AnalyticsConfig {
+  /**
+   * Google Analytics 4 Measurement ID (e.g. "G-XXXXXXXXXX").
+   * Leave empty to disable GA4.
+   */
+  ga4Id: string;
+  /**
+   * Plausible Analytics domain (e.g. "yourdomain.com").
+   * Leave empty to disable Plausible.
+   */
+  plausibleDomain: string;
+}
+
 export const siteConfig = {
   // ── Identity ──────────────────────────────────────────────────────────────
   /** Full name — used in SEO, meta tags, OG, copyright */
-  name: "Lê Hoàn",
+  name: "Lê Văn Xuân Hoàn",
   /** Uppercase display — shown in Navbar & Footer logo */
   displayName: "LE HOAN",
   /** Center node in skills graph (supports \n for line break) */
@@ -33,11 +46,16 @@ export const siteConfig = {
   /** Hero section avatar / profile photo */
   avatarPath: "/avatar.png",
 
+  /** Professional title — used in JSON-LD Person schema */
+  jobTitle: "Full-Stack Developer",
+  /** Employment company name — used in JSON-LD Person schema */
+  worksFor: "",
+
   // ── Domain & SEO ──────────────────────────────────────────────────────────
   /** Production domain — used for canonical URLs, OG, sitemap */
   domain: "https://hoanle.dev",
   /** OG site name */
-  ogSiteName: "Lê Hoàn — Portfolio",
+  ogSiteName: "Lê Văn Xuân Hoàn — Portfolio",
   /** Twitter/X handle for meta tags */
   twitterHandle: "@hoanle",
 
@@ -70,6 +88,15 @@ export const siteConfig = {
       icon: "Mail",
     },
   ] satisfies SocialLink[],
+
+  // ── Analytics (optional) ──────────────────────────────────────────────────
+  // Leave values empty ("") to disable the corresponding provider.
+  analytics: {
+    /** Google Analytics 4 Measurement ID (e.g. "G-XXXXXXXXXX") */
+    ga4Id: "",
+    /** Plausible Analytics domain (e.g. "yourdomain.com") */
+    plausibleDomain: "",
+  } satisfies AnalyticsConfig,
 } as const;
 
 export type SiteConfig = typeof siteConfig;

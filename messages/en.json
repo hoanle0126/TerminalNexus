@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "Lê Hoàn | Full-Stack Developer",
-    "description": "Personal portfolio of Lê Hoàn — Full-Stack Developer specializing in React, Next.js, and Cloud Architecture."
+    "title": "Lê Văn Xuân Hoàn | Full-Stack Developer",
+    "description": "Personal portfolio of Lê Văn Xuân Hoàn — Full-Stack Developer specializing in React, Next.js, and Cloud Architecture."
   },
   "nav": {
     "home": "Home",
@@ -14,7 +14,7 @@
   },
   "hero": {
     "greeting": "Hello, I'm",
-    "name": "Lê Hoàn",
+    "name": "Lê Văn Xuân Hoàn",
     "role": "Full-Stack Developer",
     "tagline": "> Full-Stack Developer — Cloud Architect — UI Engineer",
     "description": "Building modern web experiences with passion and creativity. Specializing in React, Next.js, and Cloud Architecture.",
@@ -91,7 +91,7 @@
     "quickLinks": "Quick Links",
     "connect": "Connect",
     "quote": "Maybe we won't see each other again. Subscribe so you don't lose me",
-    "copyright": "© 2025 Lê Hoàn. All rights reserved.",
+    "copyright": "© 2025 Lê Văn Xuân Hoàn. All rights reserved.",
     "nav": {
       "home": "01. Home",
       "about": "02. About",
@@ -106,5 +106,14 @@
     "line3": "Initializing interface...... OK",
     "line4": "LÊ HOÀN // DEVELOPER",
     "line5": "STATUS: ONLINE"
+  },
+  "notFound": {
+    "errorCode": "404",
+    "headline": "SIGNAL_LOST",
+    "terminal": "$ locate page --path /this/route",
+    "terminalResult": "ERROR: No matching routes found.",
+    "message": "The page you're looking for has gone offline or never existed.",
+    "returnBtn": "RETURN TO BASE",
+    "ariaReturn": "Return to homepage"
   }
 }

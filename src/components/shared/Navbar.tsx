@@ -12,15 +12,12 @@ import { LanguageSwitcher } from "@/components/shared/LanguageSwitcher";
 import { NavItem } from "@/components/shared/NavItem";
 import { NAV_ITEMS, useActiveSection } from "@/components/shared/useActiveSection";
 import { siteConfig } from "@/config/site";
-
 // ─── Component ────────────────────────────────────────────────────────────────
 export function Navbar() {
   const t = useTranslations("nav");
   const pathname = usePathname();
-
   const { isScrolled, isActive } = useActiveSection(pathname);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-
   // ── Close mobile on ESC ─────────────
   useEffect(() => {
     if (!isMobileOpen) return;
@@ -30,18 +27,14 @@ export function Navbar() {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [isMobileOpen]);
-
   // ── Lock body scroll when mobile open ─
   useEffect(() => {
     document.body.style.overflow = isMobileOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [isMobileOpen]);
-
   const scrollToContact = useCallback(() => {
     document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
   }, []);
-
-  // ─── Render ───────────────────────────────────────────────────────────────
   return (
     <header
       role="banner"
@@ -52,7 +45,6 @@ export function Navbar() {
           : "bg-transparent"
       )}
     >
-      {/* ── Desktop nav ───────────────────────────────────────────────────────── */}
       <nav
         aria-label="Primary navigation"
         className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 sm:px-8 lg:px-10"
@@ -136,7 +128,6 @@ export function Navbar() {
         </button>
       </nav>
 
-      {/* ── Mobile menu ───────────────────────────────────────────────────────── */}
       <AnimatePresence>
         {isMobileOpen && (
           <motion.div

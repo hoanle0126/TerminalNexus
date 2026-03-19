@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
+import { MOTION } from "@/lib/motion";
 
 interface FadeUpProps {
   children: React.ReactNode;
@@ -8,11 +9,12 @@ interface FadeUpProps {
   className?: string;
 }
 
+// Rule 14: motion states sourced from MOTION.blurUp token
 export function FadeUp({ children, delay = 0, className }: FadeUpProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
-      animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      initial={MOTION.blurUp.hidden}
+      animate={MOTION.blurUp.visible}
       transition={{ duration: 0.6, delay, ease: "easeOut" }}
       className={className}
     >

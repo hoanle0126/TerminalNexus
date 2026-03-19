@@ -1,7 +1,7 @@
 # Commercial License
 
 **TerminalNexus — Developer Portfolio Template**  
-Copyright © 2026 Lê Hoàn (hoanle0126)
+Copyright © 2026 Lê Văn Xuân Hoàn (hoanle0126)
 
 ---
 

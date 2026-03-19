@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-
-const ROLES = ["Full-Stack Developer", "Cloud Architect", "UI Engineer"];
+import { HERO_ROLES } from "@/config/hero";
 
 export function TypewriterRole() {
   const [roleIndex, setRoleIndex] = useState(0);
@@ -11,7 +10,7 @@ export function TypewriterRole() {
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    const currentRole = ROLES[roleIndex];
+    const currentRole = HERO_ROLES[roleIndex];
     const fullLength = currentRole.length;
 
     if (!isDeleting && displayed.length < fullLength) {
@@ -30,7 +29,7 @@ export function TypewriterRole() {
     } else if (isDeleting && displayed.length === 0) {
       // Move to next role
       setIsDeleting(false);
-      setRoleIndex((prev) => (prev + 1) % ROLES.length);
+      setRoleIndex((prev) => (prev + 1) % HERO_ROLES.length);
     }
 
     return () => {

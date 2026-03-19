@@ -13,7 +13,7 @@ export function MobileTimeline({ items }: { items: ExperienceItem[] }) {
           className="mb-10 ml-8"
           initial={MOTION.slideInLeft.hidden}
           whileInView={MOTION.slideInLeft.visible}
-          transition={{ delay: i * 0.12, duration: 0.5 }}
+          transition={{ ...MOTION.timelineItem(i).transition }}
           viewport={{ once: true, margin: "-60px" }}
         >
           <span className="absolute -left-[9px] flex h-4 w-4 items-center justify-center rounded-full border-2 border-accent-primary bg-surface-deep">

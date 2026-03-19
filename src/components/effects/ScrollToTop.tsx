@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "motion/react";
 import { MOTION } from "@/lib/motion";
 import { ArrowUp } from "lucide-react";
 import { ProgressRing } from "./ProgressRing";
@@ -12,25 +12,21 @@ import { ProgressRing } from "./ProgressRing";
  * - Progress ring fills proportionally as user scrolls
  * - Smooth scroll to top on click
  * - Cyan accent color scheme
+ * - Rule 17: uses Framer Motion useScroll instead of raw scroll event listener
  */
 export function ScrollToTop() {
   const [visible, setVisible] = useState(false);
   const [progress, setProgress] = useState(0);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      const docHeight =
-        document.documentElement.scrollHeight - window.innerHeight;
-      const scrollPercent = docHeight > 0 ? scrollTop / docHeight : 0;
+  const { scrollYProgress, scrollY } = useScroll();
 
-      setVisible(scrollTop > 300);
-      setProgress(scrollPercent);
-    };
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    setProgress(latest);
+  });
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    setVisible(latest > 300);
+  });
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -57,4 +53,3 @@ export function ScrollToTop() {
     </AnimatePresence>
   );
 }
-

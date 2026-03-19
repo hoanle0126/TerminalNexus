@@ -87,7 +87,7 @@ export function NavItem({ label, href, isActive, onClick, mobile, index = 0 }: N
         className="absolute inset-0 bg-gradient-to-r from-transparent via-accent-primary/12 to-transparent pointer-events-none"
         initial={{ x: "-100%" }}
         whileHover={{ x: "100%" }}
-        transition={{ duration: 0.38, ease: "linear" }}
+        transition={MOTION.navUnderline.transition}
         aria-hidden="true"
       />
 
@@ -105,7 +105,7 @@ export function NavItem({ label, href, isActive, onClick, mobile, index = 0 }: N
       <motion.li
         initial={MOTION.slideInLeft.hidden}
         animate={MOTION.slideInLeft.visible}
-        transition={{ delay: index * 0.045, duration: 0.18, ease: "easeOut" }}
+        transition={{ ...MOTION.navItemEnter(index).transition }}
       >
         <a
           href={href}
