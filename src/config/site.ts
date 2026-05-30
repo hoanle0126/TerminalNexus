@@ -69,7 +69,7 @@ export const siteConfig = {
       href: "https://github.com/hoanle0126",
       icon: "Github",
     }
-  ] satisfies SocialLink[],
+  ] as SocialLink[],
 
   // ── Analytics (optional) ──────────────────────────────────────────────────
   // Leave values empty ("") to disable the corresponding provider.
