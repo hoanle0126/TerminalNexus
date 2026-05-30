@@ -84,7 +84,7 @@ export async function generateMetadata({
       },
     },
     icons: {
-      icon: "/favicon.ico",
+      icon: "/favicon.png",
     },
   };
 }
