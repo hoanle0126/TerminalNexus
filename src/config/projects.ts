@@ -22,22 +22,32 @@ export interface Project {
 export const PROJECTS: Project[] = [
   {
     id: 'project-alpha',
-    title: 'Project Alpha',
+    title: 'Aetheria - Editorial Botanical E-Commerce',
     description:
-      'A full-stack web application built with Next.js and NestJS, featuring real-time collaboration, authentication, and a modern dashboard interface.',
-    thumbnail: '/projects/project-alpha.jpg',
-    techStack: ['Next.js', 'NestJS', 'PostgreSQL', 'Tailwind CSS', 'Docker'],
-    demoUrl: 'https://example.com',
-    size: 'large',
+      'Premium cosmetics & skincare e-commerce platform. Designed with a minimalist editorial aesthetic and fluid animations. Officially submitted for sale on UI8.',
+    thumbnail: '/projects/atheria.png',
+    techStack: ['Next.js', 'Tailwind CSS', 'Shadcn UI', 'Framer Motion', 'GSAP'],
+    demoUrl: 'https://atheria.nacy.dev',
+    size: 'small',
   },
   {
     id: 'project-beta',
-    title: 'Project Beta',
+    title: 'Dimotrip Travel',
     description:
-      'Mobile-first e-commerce platform with payment integration, inventory management, and analytics dashboard.',
-    thumbnail: '/projects/project-beta.jpg',
-    techStack: ['React', 'Node.js', 'Redis', 'Stripe'],
-    demoUrl: 'https://example.com',
+      'Freelance cosmetics e-commerce project. Handled end-to-end development, from UI/UX design and Full-stack implementation to production deployment and post-launch support. Received excellent client feedback for UI quality and dedication.',
+    thumbnail: '/projects/dimotriptravel.png',
+    techStack: ['NextJS','ReactJS', 'Tailwind CSS', 'Shadcn UI', 'NextJS', 'PostgreSQL'],
+    demoUrl: 'https://dimotriptravel.online',
     size: 'small',
   },
+  {
+    id: 'project-gamma',
+    title: 'Korean Skincare US',
+    description:
+      'Freelance cosmetics e-commerce project. Handled the entire end-to-end process: UI/UX design, Full-stack development, production deployment, and post-launch support. Received highly positive client feedback for UI quality and dedication.',
+    thumbnail: '/projects/koreaskincareus.png',
+    techStack: ['React.JS', 'Tailwind CSS', 'Shadcn UI', 'Laravel', 'MySQL'],
+    demoUrl: 'https://koreanskincareus.com',
+    size: 'small',
+  }
 ]

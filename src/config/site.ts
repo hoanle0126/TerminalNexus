@@ -50,10 +50,12 @@ export const siteConfig = {
   jobTitle: "Full-Stack Developer",
   /** Employment company name — used in JSON-LD Person schema */
   worksFor: "",
+  /** Contact email — displayed in Contact section & used for mailto links */
+  email: "hoanle0126@gmail.com",
 
   // ── Domain & SEO ──────────────────────────────────────────────────────────
   /** Production domain — used for canonical URLs, OG, sitemap */
-  domain: "https://hoanle.dev",
+  domain: "https://nacy.dev",
   /** OG site name */
   ogSiteName: "Lê Văn Xuân Hoàn — Portfolio",
   /** Twitter/X handle for meta tags */
@@ -66,27 +68,7 @@ export const siteConfig = {
       key: "socialGithub",
       href: "https://github.com/hoanle0126",
       icon: "Github",
-    },
-    {
-      key: "socialLinkedin",
-      href: "https://linkedin.com/in/hoanle",
-      icon: "Linkedin",
-    },
-    {
-      key: "socialDribbble",
-      href: "https://dribbble.com/hoanle",
-      icon: "Dribbble",
-    },
-    {
-      key: "socialBehance",
-      href: "https://behance.net/hoanle",
-      iconUrl: "https://cdn.simpleicons.org/behance/ffffff",
-    },
-    {
-      key: "socialEmail",
-      href: "mailto:hoanle@example.com",
-      icon: "Mail",
-    },
+    }
   ] satisfies SocialLink[],
 
   // ── Analytics (optional) ──────────────────────────────────────────────────

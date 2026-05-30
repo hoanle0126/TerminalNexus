@@ -67,10 +67,10 @@ export function ContactSection() {
                 {t('emailField')}
               </p>
               <a
-                href={`mailto:${t('email')}`}
+                href={`mailto:${siteConfig.email}`}
                 className="font-mono text-accent-primary hover:brightness-110 transition-colors duration-200 text-sm border-b border-accent-primary/30 hover:border-accent-primary/60 pb-0.5"
               >
-                {t('email')}
+                {siteConfig.email}
               </a>
             </div>
 
