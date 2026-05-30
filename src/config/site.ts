@@ -44,7 +44,7 @@ export const siteConfig = {
   /** Code editor variable name (e.g. "leHoan") */
   editorVarName: "leHoan",
   /** Hero section avatar / profile photo */
-  avatarPath: "/avatar.png?v=1",
+  avatarPath: "/avatar-v2.png",
 
   /** Professional title — used in JSON-LD Person schema */
   jobTitle: "Full-Stack Developer",
